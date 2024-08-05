@@ -11,6 +11,7 @@
   },
   "include": [
     "e2e",
+    "plugins",
     "commitlint.config.ts",
     "eslint.config.js",
     "playwright.config.ts",
