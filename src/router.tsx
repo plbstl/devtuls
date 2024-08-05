@@ -12,12 +12,22 @@ const about: RouteObject = {
   lazy: () => import('./routes/about'),
 }
 
-// https://github.com/remix-run/react-router/issues/10787
-export const appRouter: ReturnType<typeof createBrowserRouter> = createBrowserRouter([
+const routes: RouteObject[] = [
   {
     path: '/',
     element: <RootLayout />,
     errorElement: <ErrorPage />,
     children: [index, about],
   },
-])
+]
+
+// https://github.com/remix-run/react-router/issues/10787
+export const appRouter: ReturnType<typeof createBrowserRouter> = createBrowserRouter(routes, {
+  future: {
+    v7_fetcherPersist: true,
+    v7_normalizeFormMethod: true,
+    v7_partialHydration: true,
+    v7_relativeSplatPath: true,
+    v7_skipActionErrorRevalidation: true,
+  },
+})
