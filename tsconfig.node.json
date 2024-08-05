@@ -9,5 +9,5 @@
     "strict": true,
     "noEmit": true
   },
-  "include": ["commitlint.config.ts", "vite.config.ts"]
+  "include": ["commitlint.config.ts", "prettier.config.js", "vite.config.ts"]
 }

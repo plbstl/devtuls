@@ -1,0 +1,9 @@
+# Misc
+node_modules
+dist
+pnpm-lock.yaml
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
