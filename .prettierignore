@@ -7,3 +7,13 @@ pnpm-lock.yaml
 .vscode/*
 !.vscode/extensions.json
 .idea
+
+# Playwright
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
+
+# Vitest
+/coverage/
+/vitest-report/
