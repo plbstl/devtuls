@@ -12,7 +12,7 @@
     "dev": "vite",
     "build": "tsc --build && vite build",
     "format": "prettier . --write --cache --list-different",
-    "lint": "prettier . --check --cache && eslint . --max-warnings 0",
+    "lint": "prettier . --check --cache && eslint . --cache --cache-location 'node_modules/.cache/eslint/' --max-warnings 0",
     "prepare": "git config core.hookspath .githooks",
     "preview": "vite preview",
     "test": "playwright test",
