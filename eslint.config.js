@@ -7,7 +7,18 @@ import ts from 'typescript-eslint'
 
 export default ts.config(
   // ignore patterns (.eslintignore)
-  { ignores: ['*-report', 'coverage', 'dist', 'playwright', 'test-results', 'eslint.config.js', 'prettier.config.js'] },
+  {
+    ignores: [
+      '*-report',
+      'coverage',
+      'dist',
+      'playwright',
+      'storybook-static',
+      'test-results',
+      'eslint.config.js',
+      'prettier.config.js',
+    ],
+  },
   // Files to scan
   { files: ['**/*.{js,ts,tsx}'] },
   // typescript eslint
