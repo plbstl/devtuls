@@ -5,7 +5,7 @@ const prettierConfig = {
   singleQuote: true,
   plugins: ['@ianvs/prettier-plugin-sort-imports'],
   importOrderTypeScriptVersion: '5.5.4',
-  importOrder: ['^(react/(.*)$)|^(react$)', '<THIRD_PARTY_MODULES>', '^[.]'],
+  importOrder: ['^(react/(.*)$)|^(react$)', '<THIRD_PARTY_MODULES>', '^(~/(.*)$)', '^[.]'],
 }
 
 export default prettierConfig
