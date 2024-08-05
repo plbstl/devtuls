@@ -13,6 +13,7 @@
     "build": "tsc --build && vite build",
     "format": "prettier . --write --cache --list-different",
     "lint": "prettier . --check --cache && eslint . --max-warnings 0",
+    "prepare": "git config core.hookspath .githooks",
     "preview": "vite preview"
   },
   "dependencies": {
