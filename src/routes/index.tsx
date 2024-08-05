@@ -1,9 +1,10 @@
 import { useState } from 'react'
 import viteLogo from '/vite.svg'
-import reactLogo from './assets/react.svg'
-import './App.css'
+import { Link } from 'react-router-dom'
+import reactLogo from '../assets/react.svg'
+import '../App.css'
 
-function App() {
+function IndexRoute() {
   const [count, setCount] = useState(0)
 
   return (
@@ -18,6 +19,12 @@ function App() {
       </div>
       <h1>Vite + React</h1>
       <div className="card">
+        <p>
+          <Link to="/about">About Devtuls</Link>
+        </p>
+        <p>
+          <Link to="/err">Error page</Link>
+        </p>
         <button
           onClick={() => {
             setCount((count) => count + 1)
@@ -34,4 +41,4 @@ function App() {
   )
 }
 
-export default App
+export { IndexRoute as Component }
