@@ -1,3 +1,5 @@
+/// <reference types="vitest" />
+
 import path from 'node:path'
 import react from '@vitejs/plugin-react-swc'
 import { defineConfig } from 'vite'
@@ -9,6 +11,18 @@ export default defineConfig({
   resolve: {
     alias: {
       '~': path.resolve(import.meta.dirname, 'src'),
+    },
+  },
+  test: {
+    clearMocks: true,
+    include: ['src/**/*.test.?(c|m)[jt]s?(x)'],
+    outputFile: {
+      html: 'vitest-report/index.html',
+    },
+    reporters: process.env.CI ? 'default' : ['default', 'html'],
+    coverage: {
+      enabled: true,
+      include: ['src/lib/**/*.{js,ts}'],
     },
   },
   plugins: [
