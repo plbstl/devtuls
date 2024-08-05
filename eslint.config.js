@@ -14,9 +14,16 @@ export default ts.config(
   js.configs.recommended,
   ...ts.configs.strictTypeChecked,
   ...ts.configs.stylisticTypeChecked,
-  // react hooks, react
+  // storybook, react hooks, react
   ...fixupConfigRules(
-    new FlatCompat().extends('plugin:react-hooks/recommended', 'plugin:react/recommended', 'plugin:react/jsx-runtime'),
+    new FlatCompat().extends(
+      'plugin:storybook/recommended',
+      'plugin:storybook/csf',
+      'plugin:storybook/csf-strict',
+      'plugin:react-hooks/recommended',
+      'plugin:react/recommended',
+      'plugin:react/jsx-runtime',
+    ),
   ),
   // misc
   {
