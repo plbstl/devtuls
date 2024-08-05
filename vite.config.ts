@@ -4,6 +4,7 @@ import path from 'node:path'
 import react from '@vitejs/plugin-react-swc'
 import { defineConfig } from 'vite'
 import { VitePWA as pwa } from 'vite-plugin-pwa'
+import svgr from 'vite-plugin-svgr'
 import html_minify from './plugins/vite-plugin-devtuls-html-minify'
 
 // https://vitejs.dev/config/
@@ -26,6 +27,7 @@ export default defineConfig({
     },
   },
   plugins: [
+    svgr(),
     react(),
     html_minify(),
     pwa({
