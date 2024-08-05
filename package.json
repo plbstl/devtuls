@@ -15,6 +15,7 @@
     "lint": "prettier . --check --cache && eslint . --cache --cache-location 'node_modules/.cache/eslint/' --max-warnings 0",
     "prepare": "git config core.hookspath .githooks",
     "preview": "vite preview",
+    "pwa": "vite build && vite preview",
     "test": "playwright test",
     "test:ui": "playwright test --ui"
   },
@@ -36,6 +37,7 @@
     "@types/node": "^22.1.0",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
+    "@vite-pwa/assets-generator": "^0.2.4",
     "@vitejs/plugin-react-swc": "^3.7.0",
     "eslint": "^9.8.0",
     "eslint-plugin-react": "^7.35.0",
@@ -46,7 +48,8 @@
     "prettier": "^3.3.3",
     "typescript": "^5.5.4",
     "typescript-eslint": "^8.0.0",
-    "vite": "^5.3.5"
+    "vite": "^5.3.5",
+    "vite-plugin-pwa": "^0.20.1"
   },
   "packageManager": "pnpm@9.6.0+sha256.dae0f7e822c56b20979bb5965e3b73b8bdabb6b8b8ef121da6d857508599ca35"
 }

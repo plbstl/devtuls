@@ -27,6 +27,7 @@ export default ts.config(
       globals: {
         ...globals.browser,
         ...globals.es2020,
+        ...globals.worker,
       },
       ecmaVersion: 'latest',
       sourceType: 'module',
