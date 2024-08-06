@@ -24,7 +24,18 @@ const tool: RouteObject = {
 const dnsLookupTool: RouteObject = {
   path: 'dns-lookup',
   children: [
-    { index: true, lazy: () => import('./routes/tools/dns-lookup') },
+    {
+      index: true,
+      lazy: () => import('./routes/tools/dns-lookup'),
+      loader: async (args) => {
+        const { loader } = await import('./routes/tools/dns-lookup.lib')
+        return loader(args)
+      },
+      action: async (args) => {
+        const { action } = await import('./routes/tools/dns-lookup.lib')
+        return action(args)
+      },
+    },
     { path: 'docs', lazy: () => import('./routes/tools/dns-lookup') },
     { path: 'changelog', lazy: () => import('./routes/tools/dns-lookup') },
   ],

@@ -1,6 +1,6 @@
 import { useState } from 'react'
-import { Body1, Button, makeStyles, Tab, TabList, Title2, tokens, type TabListProps } from '@fluentui/react-components'
-import { useMatch } from 'react-router-dom'
+import { Body1, Button, makeStyles, Tab, TabList, Text, Title2, tokens, type TabListProps } from '@fluentui/react-components'
+import { useLoaderData, useMatch } from 'react-router-dom'
 import Link from '~/components/Link'
 
 const useStyles = makeStyles({
@@ -27,6 +27,7 @@ const useStyles = makeStyles({
 })
 
 const DnsLookupRoute = (props: Partial<TabListProps>) => {
+  const loaderData = useLoaderData()
   const styles = useStyles()
   const matchedTool = useMatch(':tool')?.params.tool
   const matchParams = useMatch(':tool/:tab')?.params
@@ -61,13 +62,19 @@ const DnsLookupRoute = (props: Partial<TabListProps>) => {
 
       <div>
         {defaultSelected === 'tool' && (
-          <Button
-            onClick={() => {
-              setCount((count) => count + 1)
-            }}
-          >
-            count is {count}
-          </Button>
+          <div style={{ padding: '1rem' }}>
+            <Button
+              onClick={() => {
+                setCount((count) => count + 1)
+              }}
+            >
+              count is {count}
+            </Button>
+
+            <div style={{ padding: '1rem' }}>
+              <Text as="pre">{JSON.stringify(loaderData, null, 2)}</Text>
+            </div>
+          </div>
         )}
         {defaultSelected === 'docs' && 'Documentation'}
         {defaultSelected === 'changelog' && 'Changelog'}
