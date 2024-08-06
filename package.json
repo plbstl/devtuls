@@ -30,6 +30,7 @@
     "vitest:ui": "vitest --ui"
   },
   "dependencies": {
+    "@fluentui/react-components": "^9.54.7",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-router-dom": "^6.26.0"

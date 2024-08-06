@@ -2,7 +2,6 @@ import { useState } from 'react'
 import viteLogo from '/vite.svg'
 import { Link } from 'react-router-dom'
 import reactLogo from '../assets/react.svg'
-import '../App.css'
 
 function IndexRoute() {
   const [count, setCount] = useState(0)

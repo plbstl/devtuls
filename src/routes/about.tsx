@@ -1,5 +1,4 @@
-import { Link } from 'react-router-dom'
-import '../App.css'
+import Link from '~/components/Link'
 
 function AboutRoute() {
   return (
