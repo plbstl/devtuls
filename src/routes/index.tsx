@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { Button } from '@fluentui/react-components'
 import viteLogo from '/vite.svg'
 import Link from '~/components/Link'
 import reactLogo from '../assets/react.svg'
@@ -22,15 +23,18 @@ function IndexRoute() {
           <Link href="/about">About Devtuls</Link>
         </p>
         <p>
+          <Link href="/tool">Tool</Link>
+        </p>
+        <p>
           <Link href="/err">Error page</Link>
         </p>
-        <button
+        <Button
           onClick={() => {
             setCount((count) => count + 1)
           }}
         >
           count is {count}
-        </button>
+        </Button>
         <p>
           Edit <code>src/App.tsx</code> and save to test HMR
         </p>

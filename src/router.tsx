@@ -12,12 +12,21 @@ const about: RouteObject = {
   lazy: () => import('./routes/about'),
 }
 
+const tool: RouteObject = {
+  path: 'tool',
+  children: [
+    { index: true, lazy: () => import('./routes/tool') },
+    { path: 'docs', lazy: () => import('./routes/tool') },
+    { path: 'changelog', lazy: () => import('./routes/tool') },
+  ],
+}
+
 const routes: RouteObject[] = [
   {
     path: '/',
     element: <RootLayout />,
     errorElement: <ErrorPage />,
-    children: [index, about],
+    children: [index, about, tool],
   },
 ]
 
