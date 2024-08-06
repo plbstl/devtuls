@@ -6,10 +6,10 @@ function AboutRoute() {
       <h1>Devtuls</h1>
       <div className="card">
         <p>
-          <Link to="/">Home</Link>
+          <Link href="/">Home</Link>
         </p>
         <p>
-          <Link to="/err">Error page</Link>
+          <Link href="/err">Error page</Link>
         </p>
       </div>
     </>

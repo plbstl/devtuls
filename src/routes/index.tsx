@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import viteLogo from '/vite.svg'
-import { Link } from 'react-router-dom'
+import Link from '~/components/Link'
 import reactLogo from '../assets/react.svg'
 
 function IndexRoute() {
@@ -19,10 +19,10 @@ function IndexRoute() {
       <h1>Vite + React</h1>
       <div className="card">
         <p>
-          <Link to="/about">About Devtuls</Link>
+          <Link href="/about">About Devtuls</Link>
         </p>
         <p>
-          <Link to="/err">Error page</Link>
+          <Link href="/err">Error page</Link>
         </p>
         <button
           onClick={() => {
