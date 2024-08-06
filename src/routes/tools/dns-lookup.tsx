@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Body1, Button, makeStyles, Tab, TabList, Text, Title2, tokens, type TabListProps } from '@fluentui/react-components'
+import { Body1, Button, makeStyles, Tab, TabList, Text, Title2, tokens } from '@fluentui/react-components'
 import { useLoaderData, useMatch } from 'react-router-dom'
 import Link from '~/components/Link'
 
@@ -26,7 +26,7 @@ const useStyles = makeStyles({
   },
 })
 
-const DnsLookupRoute = (props: Partial<TabListProps>) => {
+const DnsLookupRoute = () => {
   const loaderData = useLoaderData()
   const styles = useStyles()
   const matchedTool = useMatch(':tool')?.params.tool
@@ -47,7 +47,7 @@ const DnsLookupRoute = (props: Partial<TabListProps>) => {
           </Body1>
         </div>
 
-        <TabList {...props} className={styles.headingTabs} defaultSelectedValue={defaultSelected}>
+        <TabList className={styles.headingTabs} defaultSelectedValue={defaultSelected}>
           <Link href={baseHref} appearance="subtle" className={styles.tabName}>
             <Tab value="tool">Tool</Tab>
           </Link>
