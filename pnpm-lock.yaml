@@ -20,6 +20,9 @@ importers:
       react-router-dom:
         specifier: ^6.26.0
         version: 6.26.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      workbox-window:
+        specifier: ^7.1.0
+        version: 7.1.0
     devDependencies:
       '@commitlint/cli':
         specifier: ^19.3.0
