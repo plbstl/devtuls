@@ -1,4 +1,6 @@
 :root {
+  background-color: var(--colorNeutralBackground1, #292929);
+  color: var(--colorNeutralForeground1, #ffffff);
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -11,9 +13,4 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-}
-
-.fluentui-root {
-  min-height: 100vh;
-  height: 100%;
 }
