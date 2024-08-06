@@ -21,12 +21,21 @@ const tool: RouteObject = {
   ],
 }
 
+const dnsLookupTool: RouteObject = {
+  path: 'dns-lookup',
+  children: [
+    { index: true, lazy: () => import('./routes/tools/dns-lookup') },
+    { path: 'docs', lazy: () => import('./routes/tools/dns-lookup') },
+    { path: 'changelog', lazy: () => import('./routes/tools/dns-lookup') },
+  ],
+}
+
 const routes: RouteObject[] = [
   {
     path: '/',
     element: <RootLayout />,
     errorElement: <ErrorPage />,
-    children: [index, about, tool],
+    children: [index, about, tool, dnsLookupTool],
   },
 ]
 
