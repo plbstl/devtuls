@@ -16,7 +16,7 @@
 # 2. Generate kebab, pascal and camel cases of the tool name.
 # 3. Generate utilities and UI components for the tool using templates.
 # 4. Inject the tool's route utilities into react-router.
-# 5. Format, lint-fix and git-stage the touched files from the previous steps.
+# 5. Format, eslint-fix and git-stage the touched files from the previous steps.
 # 6. Print success message.
 #
 # Usage:
@@ -101,6 +101,7 @@ for src_lib_template_filename in templates/src_lib/*; do
     -e "s/<:NewTool>/$pascal_case/g" \
     -e "s/<:newTool>/$camel_case/g" \
     <"$src_lib_template_filename" >"$src_lib_tool_filename"
+  # Add the new file to the list of created files.
   created_files+=("$src_lib_tool_filename")
 done
 
@@ -118,6 +119,7 @@ for src_routes_tools_template_filename in templates/src_routes_tools/*; do
     -e "s/<:NewTool>/$pascal_case/g" \
     -e "s/<:newTool>/$camel_case/g" \
     <"$src_routes_tools_template_filename" >"$src_routes_tools_tool_filename"
+  # Add the new file to the list of created files.
   created_files+=("$src_routes_tools_tool_filename")
 done
 
@@ -150,7 +152,7 @@ mv "$src_router_tsx".gen "$src_router_tsx"
 # Add the `src_router_tsx` file to the list of ediited files.
 edited_files+=("$src_router_tsx")
 
-# 5. Format, lint-fix and git-stage the touched files from the previous steps.
+# 5. Format, eslint-fix and git-stage the touched files from the previous steps.
 
 pnpm exec prettier --cache --log-level silent --write -- "${created_files[@]}" "${edited_files[@]}"
 pnpm exec eslint --cache --cache-location 'node_modules/.cache/eslint/' --quiet --fix -- "${created_files[@]}" "${edited_files[@]}"
