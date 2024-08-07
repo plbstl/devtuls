@@ -43,6 +43,7 @@ const routes: RouteObject[] = [
 
 // https://github.com/remix-run/react-router/issues/10787
 export const appRouter: ReturnType<typeof createBrowserRouter> = createBrowserRouter(routes, {
+  basename: '/devtuls',
   future: {
     v7_fetcherPersist: true,
     v7_normalizeFormMethod: true,
