@@ -14,6 +14,7 @@ export default ts.config(
       'dist',
       'playwright',
       'storybook-static',
+      'templates',
       'test-results',
       'eslint.config.js',
       'prettier.config.js',

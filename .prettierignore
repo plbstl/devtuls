@@ -3,6 +3,7 @@ node_modules
 dist
 pnpm-lock.yaml
 storybook-static
+templates
 
 # Editor directories and files
 .vscode/*
