@@ -1,7 +1,7 @@
-import { useState } from 'react'
-import { Body1, Button, makeStyles, Tab, TabList, Text, Title2, tokens } from '@fluentui/react-components'
-import { useLoaderData, useMatch } from 'react-router-dom'
+import { Body1, makeStyles, Tab, TabList, Title2, tokens } from '@fluentui/react-components'
+import { useMatch } from 'react-router-dom'
 import Link from '~/components/Link'
+import DnsLookupRouteTool from './dns-lookup.tool'
 
 const useStyles = makeStyles({
   headingContainer: {
@@ -27,13 +27,11 @@ const useStyles = makeStyles({
 })
 
 const DnsLookupRoute = () => {
-  const loaderData = useLoaderData()
   const styles = useStyles()
   const matchedTool = useMatch(':tool')?.params.tool
   const matchParams = useMatch(':tool/:tab')?.params
   const defaultSelected = matchParams?.tab ?? 'tool'
   const baseHref = matchedTool || matchParams?.tool ? `/${matchedTool ?? matchParams?.tool}` : ''
-  const [count, setCount] = useState(0)
 
   return (
     <div>
@@ -61,21 +59,7 @@ const DnsLookupRoute = () => {
       </div>
 
       <div>
-        {defaultSelected === 'tool' && (
-          <div style={{ padding: '1rem' }}>
-            <Button
-              onClick={() => {
-                setCount((count) => count + 1)
-              }}
-            >
-              count is {count}
-            </Button>
-
-            <div style={{ padding: '1rem' }}>
-              <Text as="pre">{JSON.stringify(loaderData, null, 2)}</Text>
-            </div>
-          </div>
-        )}
+        {defaultSelected === 'tool' && <DnsLookupRouteTool />}
         {defaultSelected === 'docs' && 'Documentation'}
         {defaultSelected === 'changelog' && 'Changelog'}
       </div>
