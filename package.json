@@ -2,6 +2,7 @@
   "name": "devtuls",
   "description": "Collection of awesome developer tools available as a progressive web application.",
   "author": "Paul Ebose",
+  "homepage": "https://plbstl.github.io/devtuls",
   "repository": "https://github.com/plbstl/devtuls",
   "license": "MIT",
   "private": true,
