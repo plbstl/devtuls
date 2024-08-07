@@ -1,0 +1,110 @@
+#!/usr/bin/env bash
+
+# About:
+#
+# This is a helper script to create a new tool in Devtuls.
+#
+# No error handling is done. Because of that, it is better
+# for you to have a clean working directory and staging area.
+# This helps you very clearly see the changes that are made.
+#
+# See: https://github.com/plbstl/devtuls/blob/main/CONTRIBUTING.md#adding-a-new-tool
+#
+# This script will do the following:
+#
+# 1. Validate the inputted tool name (format: alphabets and spaces).
+# 2. Generate kebab, pascal and camel cases of the tool name.
+# 3. Generate utilities and UI components for the tool using templates.
+# 4. Inject the tool's route utilities into react-router.
+# 5. Format, lint-fix and git-stage the touched files from the previous steps.
+# 6. Print success message.
+#
+# Usage:
+#
+# NOTE: For predictability, run this script from the project root.
+#
+# ./scripts/new-tool 'Tool Name'
+
+# Only dealing with ASCII characters. May improve performance.
+LC_ALL=C
+
+# Touched files.
+created_files=()
+edited_files=()
+
+# 1. Validate the inputted tool name (format: alphabets and spaces).
+
+# Get the tool name from command args.
+# Example: '   eBay        YouTuber    '.
+tool_name="$1"
+
+# Trim the tool name. Remove leading, trailing and duplicate white-spaces.
+# Example: 'eBay YouTuber'
+trimmed_tool_name=$(echo "$tool_name" | xargs)
+
+# Match the tool name against a (valid tool name) regex and retreive the computed value from Bash.
+# Example: 'eBay YouTuber'
+valid_tool_name=$([[ $trimmed_tool_name =~ (^[a-zA-Z ]+$) ]] && echo "${BASH_REMATCH[1]}")
+
+# Check if the computed value is empty.
+if [[ -z "$valid_tool_name" ]]; then
+  # Computed value is empty, so the input is invalid.
+  echo "Invalid tool name: $trimmed_tool_name"
+  echo "Tool name can contain ONLY alphabets and spaces."
+  echo "See: https://github.com/plbstl/devtuls/blob/main/CONTRIBUTING.md#adding-a-new-tool"
+  # Exit the script with an error.
+  exit 1
+fi
+
+# 2. Generate kebab, pascal and camel cases of the tool name.
+
+# Pass the `valid_tool_name` variable as an input to the tr command, using redirection.
+# Transform every space to dash, and every uppercase letter to lowercase.
+# Example: 'eBay YouTuber' -> 'ebay-youtuber'
+kebab_case=$(tr " [:upper:]" "-[:lower:]" <<<"$valid_tool_name")
+
+# Using awk to do something like `JavaScriptString.split('-').map(func).join('')`.
+# Pass the `kebab_case` variable as an input to the awk command, using redirection.
+# Set the input field seperator [FS] for the awk command as dash (-).
+# Set the output field seperator [OFS] for the awk command as an empty string ("").
+# Loop through all the fields [NF]:
+#   a. Retrieve the first character of the current field:
+#       substr(searchString=current-field, item=first, length=1)
+#   b. Transform the first character to uppercase.
+#   c. Replace the first character of the current field to the uppercased variant:
+#       sub(regex=first-character, replace=uppercased-variant, searchString=current-field)
+# After exiting the loop, print all fields to the stdout.
+# Example: 'ebay-youtuber' -> 'EbayYoutuber'
+pascal_case=$(awk -v FS="-" -v OFS="" '{ for (i=1; i <= NF; i++) { sub(/^./, toupper(substr($i, 1, 1)), $i) } print }' <<<"$kebab_case")
+
+# Pass the `pascal_case` variable as an input to the sed command, using redirection.
+# Use `sed` to replace the first chracter of the `pascal_case` variable to the lowercased variant.
+# Pass the first character (index=0, length=1) of the `pascal_case` variable to the tr command, using redirection.
+# Use the tr command to transform the passed-in character to lowercase.
+# The result of the tr command is the lowercase variant of the first character.
+# Example: 'EbayYoutuber' -> 'ebayYoutuber'
+camel_case=$(sed "s/^./$(tr "[:upper:]" "[:lower:]" <<<"${pascal_case:0:1}")/" <<<"$pascal_case")
+
+# 3. Generate utilities and UI components for the tool using templates.
+# TODO: implement
+
+# 4. Inject the tool's route utilities into react-router.
+# TODO: implement
+
+# 5. Format, lint-fix and git-stage the touched files from the previous steps.
+
+pnpm exec prettier --cache --log-level silent --write -- "${created_files[@]}" "${edited_files[@]}"
+pnpm exec eslint --cache --cache-location 'node_modules/.cache/eslint/' --quiet --fix -- "${created_files[@]}" "${edited_files[@]}"
+git add --all -- "${created_files[@]}" "${edited_files[@]}"
+
+# 6. Print success message.
+
+echo 'Created files:'
+for created_filename in "${created_files[@]}"; do
+  echo '-' "$created_filename"
+done
+
+echo -e '\n''Edited files':
+for edited_filename in "${edited_files[@]}"; do
+  echo '-' "$edited_filename"
+done
