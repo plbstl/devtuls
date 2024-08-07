@@ -87,41 +87,34 @@ camel_case=$(sed "s/^./$(tr "[:upper:]" "[:lower:]" <<<"${pascal_case:0:1}")/" <
 
 # 3. Generate utilities and UI components for the tool using templates.
 
+# Helper function to generate working files from inputted templates.
+gen_file_from_template() {
+  local input_dir=$1
+  local output_dir=$2
+
+  for template_filename in $input_dir; do
+    # Omit /^tool./ from the current input filename using regex and retreive the computed value from Bash.
+    relevant_filename_part=$([[ $template_filename =~ tool.([a-zA-Z\.]+) ]] && echo "${BASH_REMATCH[1]}")
+    # Replace the /^tool/ part of the template filename to the tool name in kebab case.
+    output_filename="$output_dir/$kebab_case.$relevant_filename_part"
+    # Replace the template placeholders with the tool name in its relevant string cases.
+    # Then output the result in a new file located at `output_filename`.
+    sed \
+      -e "s/<:New Tool>/$valid_tool_name/g" \
+      -e "s/<:new-tool>/$kebab_case/g" \
+      -e "s/<:NewTool>/$pascal_case/g" \
+      -e "s/<:newTool>/$camel_case/g" \
+      <"$template_filename" >"$output_filename"
+    # Add the new file to the list of created files.
+    created_files+=("$output_filename")
+  done
+}
+
 # Create files in `src/lib` folder using `src_lib` templates.
-for src_lib_template_filename in templates/src_lib/*; do
-  # Omit /^tool./ from the current filename using regex and retreive the computed value from Bash.
-  relevant_filename_part=$([[ $src_lib_template_filename =~ tool.([a-zA-Z\.]+) ]] && echo "${BASH_REMATCH[1]}")
-  # Replace the /^tool/ part of the template filename to the tool name in kebab case.
-  src_lib_tool_filename="src/lib/$kebab_case.$relevant_filename_part"
-  # Replace the template placeholders with the tool name in its relevant string cases.
-  # Input is the currently looped template file, and output is a new file in the "src/lib/" folder.
-  sed \
-    -e "s/<:New Tool>/$valid_tool_name/g" \
-    -e "s/<:new-tool>/$kebab_case/g" \
-    -e "s/<:NewTool>/$pascal_case/g" \
-    -e "s/<:newTool>/$camel_case/g" \
-    <"$src_lib_template_filename" >"$src_lib_tool_filename"
-  # Add the new file to the list of created files.
-  created_files+=("$src_lib_tool_filename")
-done
+gen_file_from_template 'templates/src_lib/*' 'src/lib'
 
 # Create files in `src/routes/tools` using `src_routes_tools` templates.
-for src_routes_tools_template_filename in templates/src_routes_tools/*; do
-  # Omit /^tool./ from the current filename using regex and retreive the computed value from Bash.
-  relevant_filename_part=$([[ $src_routes_tools_template_filename =~ tool.([a-zA-Z\.]+) ]] && echo "${BASH_REMATCH[1]}")
-  # Replace the /^tool/ part of the template filename to the tool name in kebab case.
-  src_routes_tools_tool_filename="src/routes/tools/$kebab_case.$relevant_filename_part"
-  # Replace the template placeholders with the tool name in its relevant string cases.
-  # Input is the currently looped template file, and output is a new file in the "src/routes/tools" folder.
-  sed \
-    -e "s/<:New Tool>/$valid_tool_name/g" \
-    -e "s/<:new-tool>/$kebab_case/g" \
-    -e "s/<:NewTool>/$pascal_case/g" \
-    -e "s/<:newTool>/$camel_case/g" \
-    <"$src_routes_tools_template_filename" >"$src_routes_tools_tool_filename"
-  # Add the new file to the list of created files.
-  created_files+=("$src_routes_tools_tool_filename")
-done
+gen_file_from_template 'templates/src_routes_tools/*' 'src/routes/tools'
 
 # 4. Inject the tool's route utilities into react-router.
 
