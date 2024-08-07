@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react'
 import { createMemoryRouter, RouterProvider, type RouteObject } from 'react-router-dom'
-import { Component as <:NewTool>Route } from './<:new-tool>'
 import { loader, type <:NewTool>LoaderData } from './<:new-tool>.lib'
+import { Component as <:NewTool>Route } from './<:new-tool>.page'
 
 const meta: Meta<typeof <:NewTool>Route> = {
   component: <:NewTool>Route,

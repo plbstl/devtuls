@@ -3,7 +3,7 @@ const <:newTool>Tool: RouteObject = {
   children: [
     {
       index: true,
-      lazy: () => import('./routes/tools/<:new-tool>'),
+      lazy: () => import('./routes/tools/<:new-tool>.page'),
       loader: async (args) => {
         const { loader } = await import('./routes/tools/<:new-tool>.lib')
         return loader(args)
@@ -13,7 +13,7 @@ const <:newTool>Tool: RouteObject = {
         return action(args)
       },
     },
-    { path: 'docs', lazy: () => import('./routes/tools/<:new-tool>') },
-    { path: 'changelog', lazy: () => import('./routes/tools/<:new-tool>') },
+    { path: 'docs', lazy: () => import('./routes/tools/<:new-tool>.page') },
+    { path: 'changelog', lazy: () => import('./routes/tools/<:new-tool>.page') },
   ],
 }
