@@ -43,7 +43,7 @@ type PreviewArgs = Omit<DnsLookupLoaderData, 'disableValidation' | 'receiveDnsse
 export const Preview = {
   args: {
     serviceUrl: 'cfm',
-    domainName: 'devtuls.com',
+    domainName: 'github.com',
     resourceRecordType: 'A',
     disableValidation: '0',
     receiveDnssecData: 'true',

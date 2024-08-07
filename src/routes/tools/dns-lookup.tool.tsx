@@ -70,7 +70,7 @@ function DnsLookupRouteTool() {
           <Input
             form="dnsLookup"
             name="name"
-            placeholder="devtuls.com, google.com"
+            placeholder="github.com, google.com"
             contentBefore={<GlobeSearchFilled />}
             readOnly={submitting}
             value={domainName}

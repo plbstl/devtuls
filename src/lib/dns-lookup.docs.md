@@ -24,7 +24,7 @@ State is saved in the URL, can be bookmarked and shared through links. There are
 
 ### name
 
-The domain name you want to retrieve DNS data for. Examples are `devtuls.com`, `api.github.com`, etc.
+The domain name you want to retrieve DNS data for. Examples are `google.com`, `api.github.com`, etc.
 
 ### type
 
