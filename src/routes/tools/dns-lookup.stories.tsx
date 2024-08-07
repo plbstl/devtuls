@@ -8,7 +8,13 @@ const meta: Meta<typeof DnsLookupRoute> = {
   decorators: [
     (Story, { args }) => {
       const routes: RouteObject[] = [{ path: '*', loader, element: <Story /> }]
-      const { url, name, type, cd, do: d0 } = args as DnsLookupLoaderData
+      const {
+        serviceUrl: url,
+        domainName: name,
+        resourceRecordType: type,
+        disableValidation: cd,
+        receiveDnssecData: d0,
+      } = args as DnsLookupLoaderData
 
       const previewRouter = createMemoryRouter(routes, {
         initialEntries: [`/dns-lookup?url=${url}&name=${name}&type=${type}&cd=${cd}&do=${d0}`],
@@ -29,14 +35,17 @@ const meta: Meta<typeof DnsLookupRoute> = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-type PreviewArgs = Omit<DnsLookupLoaderData, 'cd' | 'do'> & { cd: string; do: string }
+type PreviewArgs = Omit<DnsLookupLoaderData, 'disableValidation' | 'receiveDnssecData'> & {
+  disableValidation: string
+  receiveDnssecData: string
+}
 
 export const Preview = {
   args: {
-    url: 'cfm',
-    name: 'devtuls.com',
-    type: 'A',
-    cd: '0',
-    do: 'true',
+    serviceUrl: 'cfm',
+    domainName: 'devtuls.com',
+    resourceRecordType: 'A',
+    disableValidation: '0',
+    receiveDnssecData: 'true',
   } satisfies PreviewArgs,
 } satisfies Story

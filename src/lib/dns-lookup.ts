@@ -2,11 +2,11 @@ import { toASCII } from 'punycode/'
 
 async function dnsLookup(input: Partial<DnsLookupInput>): Promise<DnsLookupOutput> {
   // Prepare resolver url
-  const name = toASCII(input.name ?? '')
-  const type = input.type ? `&type=${input.type}` : ''
-  const cd = input.cd ? '&cd=1' : ''
-  const d0 = input.do ? '&do=1' : ''
-  const dohUrl = input.url ? input.url : dohResolvers.Google
+  const name = toASCII(input.domainName ?? '')
+  const type = input.resourceRecordType ? `&type=${input.resourceRecordType}` : ''
+  const cd = input.disableValidation ? '&cd=1' : ''
+  const d0 = input.receiveDnssecData ? '&do=1' : ''
+  const dohUrl = input.serviceUrl ? input.serviceUrl : dohResolvers.Google
   const resolvedUrl = `${dohUrl}?name=${name}${type}${cd}${d0}`
 
   // Default error output
@@ -78,11 +78,11 @@ const dohResolvers = {
 }
 
 interface DnsLookupInput {
-  url: string
-  name: string
-  type: string
-  cd: boolean
-  do: boolean
+  serviceUrl: string
+  domainName: string
+  resourceRecordType: string
+  disableValidation: boolean
+  receiveDnssecData: boolean
 }
 
 type DnsLookupOutput = {

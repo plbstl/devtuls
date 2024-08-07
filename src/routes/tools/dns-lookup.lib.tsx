@@ -23,11 +23,11 @@ export const loader: LoaderFunction = ({ request }) => {
   }
 
   return json<DnsLookupLoaderData>({
-    name: url.searchParams.get('name') ?? '',
-    type: url.searchParams.get('type') ?? '',
-    do: url.searchParams.get('do') === '1' || url.searchParams.get('do') === 'true',
-    cd: url.searchParams.get('cd') === '1' || url.searchParams.get('cd') === 'true',
-    url: dohUrl ?? '',
+    domainName: url.searchParams.get('name') ?? '',
+    resourceRecordType: url.searchParams.get('type') ?? '',
+    disableValidation: url.searchParams.get('cd') === '1' || url.searchParams.get('cd') === 'true',
+    receiveDnssecData: url.searchParams.get('do') === '1' || url.searchParams.get('do') === 'true',
+    serviceUrl: dohUrl ?? '',
   })
 }
 
