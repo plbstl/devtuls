@@ -46,9 +46,6 @@ function AboutRoute() {
           <Link href="/">Home</Link>
         </p>
         <p>
-          <Link href="/tool">Tool</Link>
-        </p>
-        <p>
           <Link href="/dns-lookup">DNS Lookup</Link>
         </p>
         <p>
