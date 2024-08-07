@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-confusing-void-expression */
 
-import { useEffect, useState, type FormEvent } from 'react'
+import { ChangeEvent, useEffect, useState, type FormEvent } from 'react'
 import {
   Accordion,
   AccordionHeader,
@@ -10,11 +10,19 @@ import {
   Combobox,
   Field,
   Input,
+  Menu,
+  MenuItem,
+  MenuList,
+  MenuPopover,
+  MenuTrigger,
   Option,
   Switch,
+  Text,
+  tokens,
 } from '@fluentui/react-components'
-import { GlobeSearchFilled, SettingsRegular } from '@fluentui/react-icons'
+import { DatabaseLinkFilled, DocumentSearchFilled, GlobeSearchFilled, SettingsRegular } from '@fluentui/react-icons'
 import { Form, useLoaderData, useNavigation, useSubmit } from 'react-router-dom'
+import { DNS_RESOURCE_RECORD_TYPES } from '~/utils/dns-rrt-types'
 import { useSearchParam } from '~/utils/use-search-param'
 import { DnsLookupLoaderData } from './dns-lookup.lib'
 
@@ -61,7 +69,6 @@ function DnsLookupRouteTool() {
       <Form id="dnsLookup" method="POST" onSubmit={handleSubmit}>
         <Field
           label="Domain Name"
-          hint="Must be between 1 and 253 characters long."
           size="large"
           style={{
             margin: '0.75rem 0.15rem',
@@ -87,42 +94,139 @@ function DnsLookupRouteTool() {
               <AccordionHeader expandIconPosition="end" icon={<SettingsRegular />}>
                 Configuration
               </AccordionHeader>
-              <AccordionPanel>
-                <Field label="DNS-Over-HTTPS server URL">
-                  <Combobox form="dnsLookup" name="url" readOnly={submitting} freeform clearable>
-                    <Option>Option 1</Option>
-                    <Option>Option 2</Option>
-                    <Option>Option 3</Option>
+              <AccordionPanel style={{ padding: '0.15rem 0.15rem' }}>
+                <Field label="DNS-Over-HTTPS server URL" size="small">
+                  <Input
+                    form="dnsLookup"
+                    name="url"
+                    placeholder="https://dns.google/resolve"
+                    contentAfter={
+                      <Menu>
+                        <MenuTrigger>
+                          <Button icon={<DatabaseLinkFilled />} style={{ margin: '0.15rem -0.2rem' }} />
+                        </MenuTrigger>
+                        <MenuPopover>
+                          <MenuList>
+                            <MenuItem onClick={() => setUrlSearchParam('gg')}>
+                              <Text block>Google Public DNS</Text>
+                              <Text style={{ color: tokens.colorNeutralForeground4, fontSize: tokens.fontSizeBase200 }}>
+                                Google Public DNS
+                              </Text>
+                            </MenuItem>
+                            <MenuItem onClick={() => setUrlSearchParam('cf')}>
+                              <Text block>Cloudflare DNS</Text>
+                              <Text style={{ color: tokens.colorNeutralForeground4, fontSize: tokens.fontSizeBase200 }}>
+                                Default Security
+                              </Text>
+                            </MenuItem>
+                            <MenuItem onClick={() => setUrlSearchParam('cfm')}>
+                              <Text block>Cloudflare DNS Families (Malware)</Text>
+                              <Text style={{ color: tokens.colorNeutralForeground4, fontSize: tokens.fontSizeBase200 }}>
+                                Block malicious content
+                              </Text>
+                            </MenuItem>
+                            <MenuItem onClick={() => setUrlSearchParam('cfa')}>
+                              <Text block>Cloudflare DNS Families (Malware/Adult)</Text>
+                              <Text style={{ color: tokens.colorNeutralForeground4, fontSize: tokens.fontSizeBase200 }}>
+                                Block malicious and adult content
+                              </Text>
+                            </MenuItem>
+                          </MenuList>
+                        </MenuPopover>
+                      </Menu>
+                    }
+                    readOnly={submitting}
+                    value={serviceUrl}
+                    onChange={(_, { value }) => {
+                      setServiceUrl(value)
+                      setUrlSearchParam(value)
+                    }}
+                  />
+                </Field>
+                <Field label="Resource Record (RR) type" style={{ marginTop: '0.75rem' }}>
+                  <Combobox
+                    freeform
+                    inlinePopup
+                    form="dnsLookup"
+                    name="type"
+                    placeholder="A"
+                    readOnly={submitting}
+                    expandIcon={<DocumentSearchFilled />}
+                    value={resourceRecordType}
+                    onOptionSelect={(_, data) => {
+                      setResourceRecordType(data.optionText ?? '')
+                      setTypeSearchParam(data.optionText ?? '')
+                    }}
+                    onInput={(ev: ChangeEvent<HTMLInputElement>) => {
+                      setResourceRecordType(ev.target.value)
+                      setTypeSearchParam(ev.target.value)
+                    }}
+                    input={{ style: { fontSize: '12px' } }}
+                  >
+                    {DNS_RESOURCE_RECORD_TYPES.map((record) => (
+                      <Option key={`${record.TYPE}-${record.Value}`} text={record.TYPE} value={record.TYPE}>
+                        <Text style={{ fontSize: tokens.fontSizeBase200 }}>{record.TYPE}</Text>
+                        <Text
+                          as="pre"
+                          font="monospace"
+                          style={{
+                            fontSize: tokens.fontSizeBase100,
+                            backgroundColor: tokens.colorNeutralBackground2,
+                            padding: '0px 4px',
+                          }}
+                        >
+                          {record.Value}
+                        </Text>
+                        <Text block style={{ color: tokens.colorNeutralForeground4, fontSize: tokens.fontSizeBase100 }}>
+                          {record.Meaning}. {record.Reference}
+                        </Text>
+                      </Option>
+                    ))}
                   </Combobox>
                 </Field>
-                <Field label="Resource Record (RR) type">
-                  <Combobox form="dnsLookup" name="type" readOnly={submitting} freeform clearable>
-                    <Option>Option 1</Option>
-                    <Option>Option 2</Option>
-                    <Option>Option 3</Option>
-                  </Combobox>
-                </Field>
-                <div>
+                <div
+                  style={{ display: 'flex', justifyContent: 'space-between', marginTop: '0.75rem', marginBottom: '1rem' }}
+                >
                   <Switch
                     form="dnsLookup"
                     name="cd"
-                    label="Disable validation"
                     readOnly={submitting}
                     checked={disableValidation}
                     onChange={(_, { checked }) => {
                       setDisableValidation(checked)
                       setCdSearchParam(checked ? '1' : '0')
                     }}
+                    style={{ alignItems: 'center' }}
+                    input={{ style: {} }}
+                    label={{
+                      children: 'Disable validation',
+                      style: { fontSize: '11px', padding: `${tokens.spacingVerticalXXS} ${tokens.spacingHorizontalXXS}` },
+                    }}
+                    indicator={{
+                      style: {
+                        margin: `${tokens.spacingVerticalXXS} ${tokens.spacingHorizontalXXS}`,
+                      },
+                    }}
                   />
                   <Switch
                     form="dnsLookup"
                     name="do"
-                    label="Receive DNSSEC data"
                     readOnly={submitting}
                     checked={receiveDnssecData}
                     onChange={(_, { checked }) => {
                       setReceiveDnssecData(checked)
                       setDoSearchParam(checked ? '1' : '0')
+                    }}
+                    style={{ alignItems: 'center' }}
+                    input={{ style: {} }}
+                    label={{
+                      children: 'Receive DNSSEC data',
+                      style: { fontSize: '11px', padding: `${tokens.spacingVerticalXXS} ${tokens.spacingHorizontalXXS}` },
+                    }}
+                    indicator={{
+                      style: {
+                        margin: `${tokens.spacingVerticalXXS} ${tokens.spacingHorizontalXXS}`,
+                      },
                     }}
                   />
                 </div>
