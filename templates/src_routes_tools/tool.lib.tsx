@@ -1,8 +1,9 @@
 import { json, type ActionFunction, type LoaderFunction } from 'react-router-dom'
 
 /** `/<:new-tool>` route loader. */
-export const loader: LoaderFunction = () => {
-  return json<<:NewTool>LoaderData>({ dummyValue: 'loader' })
+export const loader: LoaderFunction = ({ request }) => {
+  const url = new URL(request.url)
+  return json<<:NewTool>LoaderData>({ dummyValue: url.searchParams.get('dummyValue') ?? '' })
 }
 
 /** Data returned by `/<:new-tool>` route loader. */
