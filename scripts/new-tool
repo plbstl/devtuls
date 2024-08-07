@@ -128,15 +128,15 @@ src_router_tsx='src/router.tsx'                    # output
 # Save the output in the `updated_src_router_tsx_template` variable.
 updated_src_router_tsx_template=$(sed -e "s/<:new-tool>/$kebab_case/g" -e "s/<:newTool>/$camel_case/g" <"$src_router_tsx_template")
 
+# Add tool to the children of the `routes` array in the `src/router.tsx` file.
 # Insert the updated template just above the `routes` array in the `src/router.tsx` file.
-# Then add the tool to the children of the `routes` array.
 # Because of the new lines in the updated template, sed errors with `unescaped newline inside substitute pattern`.
 # A way around this is by transforming the new lines to a different character, in this case a semicolon (;),
 # and use the transformed value in sed.
 # Then revert the special character (;) back to new lines after sed is done executing.
 sed \
-  -e 's|const routes:|'"$(tr '\n' ';' <<<"$updated_src_router_tsx_template")"' \n\n &|' \
   -e '/routes:/,/appRouter:/ s/],/, '"$camel_case"'Tool &/' \
+  -e 's|const routes:|'"$(tr '\n' ';' <<<"$updated_src_router_tsx_template")"' \n\n &|' \
   <"$src_router_tsx" |
   tr ';' '\n' >"$src_router_tsx".gen
 
