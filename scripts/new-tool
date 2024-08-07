@@ -122,7 +122,33 @@ for src_routes_tools_template_filename in templates/src_routes_tools/*; do
 done
 
 # 4. Inject the tool's route utilities into react-router.
-# TODO: implement
+
+# Set the input and output files.
+src_router_tsx_template='templates/src_router.tsx' # input
+src_router_tsx='src/router.tsx'                    # output
+
+# Update the input template with the correct tool name.
+# Pass the template file to the sed command, using redirection.
+# Replace the template placeholders with the tool name in its relevant string cases.
+# Save the output in the `updated_src_router_tsx_template` variable.
+updated_src_router_tsx_template=$(sed -e "s/<:new-tool>/$kebab_case/g" -e "s/<:newTool>/$camel_case/g" <"$src_router_tsx_template")
+
+# Insert the updated template just above the `routes` array in the `src/router.tsx` file.
+# Then add the tool to the children of the `routes` array.
+# Because of the new lines in the updated template, sed errors with `unescaped newline inside substitute pattern`.
+# A way around this is by transforming the new lines to a different character, in this case a semicolon (;),
+# and use the transformed value in sed.
+# Then revert the special character (;) back to new lines after sed is done executing.
+sed \
+  -e 's|const routes:|'"$(tr '\n' ';' <<<"$updated_src_router_tsx_template")"' \n\n &|' \
+  -e '/routes:/,/appRouter:/ s/],/, '"$camel_case"'Tool &/' \
+  <"$src_router_tsx" |
+  tr ';' '\n' >"$src_router_tsx".gen
+
+# Replace the `src_router_tsx` file with the generated file.
+mv "$src_router_tsx".gen "$src_router_tsx"
+# Add the `src_router_tsx` file to the list of ediited files.
+edited_files+=("$src_router_tsx")
 
 # 5. Format, lint-fix and git-stage the touched files from the previous steps.
 
