@@ -9,6 +9,7 @@ import html_minify from './plugins/vite-plugin-devtuls-html-minify'
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  base: '/devtuls/',
   resolve: {
     alias: {
       '~': path.resolve(import.meta.dirname, 'src'),
