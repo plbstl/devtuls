@@ -30,7 +30,6 @@ function DnsLookupRouteTool() {
   const submit = useSubmit()
   const loaderData = useLoaderData() as DnsLookupLoaderData
   const navigation = useNavigation()
-  const submitting = navigation.state === 'submitting'
   // Controlled input is needed so that the caret movement is predictable, as we are syncing with search params.
   const [domainName, setDomainName] = useState(loaderData.domainName)
   const [serviceUrl, setServiceUrl] = useState(loaderData.serviceUrl)
@@ -55,7 +54,7 @@ function DnsLookupRouteTool() {
     // We are staying on the same page after the form's action is done executing.
     // Do not disable any form element so focus can remain on the submit button.
     // Just ignore if the user continues to click while submitting.
-    if (submitting) return
+    if (navigation.state === 'submitting') return
     // Submit to the route action. Everything is executed in the browser.
     submit(JSON.stringify(loaderData), {
       encType: 'application/json',
@@ -79,7 +78,6 @@ function DnsLookupRouteTool() {
             name="name"
             placeholder="github.com, google.com"
             contentBefore={<GlobeSearchFilled />}
-            readOnly={submitting}
             value={domainName}
             onChange={(_, { value }) => {
               setDomainName(value)
@@ -135,7 +133,6 @@ function DnsLookupRouteTool() {
                         </MenuPopover>
                       </Menu>
                     }
-                    readOnly={submitting}
                     value={serviceUrl}
                     onChange={(_, { value }) => {
                       setServiceUrl(value)
@@ -150,7 +147,6 @@ function DnsLookupRouteTool() {
                     form="dnsLookup"
                     name="type"
                     placeholder="A"
-                    readOnly={submitting}
                     expandIcon={<DocumentSearchFilled />}
                     value={resourceRecordType}
                     onOptionSelect={(_, data) => {
@@ -190,7 +186,6 @@ function DnsLookupRouteTool() {
                   <Switch
                     form="dnsLookup"
                     name="cd"
-                    readOnly={submitting}
                     checked={disableValidation}
                     onChange={(_, { checked }) => {
                       setDisableValidation(checked)
@@ -211,7 +206,6 @@ function DnsLookupRouteTool() {
                   <Switch
                     form="dnsLookup"
                     name="do"
-                    readOnly={submitting}
                     checked={receiveDnssecData}
                     onChange={(_, { checked }) => {
                       setReceiveDnssecData(checked)
