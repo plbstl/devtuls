@@ -16,6 +16,7 @@ import {
   MenuPopover,
   MenuTrigger,
   Option,
+  Spinner,
   Switch,
   Text,
   tokens,
@@ -30,6 +31,7 @@ function DnsLookupRouteTool() {
   const submit = useSubmit()
   const loaderData = useLoaderData() as DnsLookupLoaderData
   const navigation = useNavigation()
+  const submitting = navigation.state === 'submitting'
   // Controlled input is needed so that the caret movement is predictable, as we are syncing with search params.
   const [domainName, setDomainName] = useState(loaderData.domainName)
   const [serviceUrl, setServiceUrl] = useState(loaderData.serviceUrl)
@@ -54,7 +56,7 @@ function DnsLookupRouteTool() {
     // We are staying on the same page after the form's action is done executing.
     // Do not disable any form element so focus can remain on the submit button.
     // Just ignore if the user continues to click while submitting.
-    if (navigation.state === 'submitting') return
+    if (submitting) return
     // Submit to the route action. Everything is executed in the browser.
     submit(JSON.stringify(loaderData), {
       encType: 'application/json',
@@ -82,6 +84,12 @@ function DnsLookupRouteTool() {
             onChange={(_, { value }) => {
               setDomainName(value)
               setNameSearchParam(value)
+            }}
+            style={{
+              animationName: submitting ? 'pulse' : 'none',
+              animationDuration: '2s',
+              animationTimingFunction: tokens.curveEasyEase,
+              animationIterationCount: 'infinite',
             }}
           />
         </Field>
@@ -138,6 +146,12 @@ function DnsLookupRouteTool() {
                       setServiceUrl(value)
                       setUrlSearchParam(value)
                     }}
+                    style={{
+                      animationName: submitting ? 'pulse' : 'none',
+                      animationDuration: '2s',
+                      animationTimingFunction: tokens.curveEasyEase,
+                      animationIterationCount: 'infinite',
+                    }}
                   />
                 </Field>
                 <Field label="Resource Record (RR) type" style={{ marginTop: '0.75rem' }} size="small">
@@ -158,6 +172,12 @@ function DnsLookupRouteTool() {
                       setTypeSearchParam(ev.target.value)
                     }}
                     input={{ style: { fontSize: '12px' } }}
+                    style={{
+                      animationName: submitting ? 'pulse' : 'none',
+                      animationDuration: '2s',
+                      animationTimingFunction: tokens.curveEasyEase,
+                      animationIterationCount: 'infinite',
+                    }}
                   >
                     {DNS_RESOURCE_RECORD_TYPES.map((record) => (
                       <Option key={`${record.TYPE}-${record.Value}`} text={record.TYPE} value={record.TYPE}>
@@ -192,7 +212,6 @@ function DnsLookupRouteTool() {
                       setCdSearchParam(checked ? '1' : '0')
                     }}
                     style={{ alignItems: 'center' }}
-                    input={{ style: {} }}
                     label={{
                       children: 'Disable validation',
                       style: { fontSize: '11px', padding: `${tokens.spacingVerticalXXS} ${tokens.spacingHorizontalXS}` },
@@ -200,6 +219,10 @@ function DnsLookupRouteTool() {
                     indicator={{
                       style: {
                         margin: `${tokens.spacingVerticalXXS} ${tokens.spacingHorizontalXXS}`,
+                        animationName: submitting ? 'pulse' : 'none',
+                        animationDuration: '2s',
+                        animationTimingFunction: tokens.curveEasyEase,
+                        animationIterationCount: 'infinite',
                       },
                     }}
                   />
@@ -212,7 +235,6 @@ function DnsLookupRouteTool() {
                       setDoSearchParam(checked ? '1' : '0')
                     }}
                     style={{ alignItems: 'center' }}
-                    input={{ style: {} }}
                     label={{
                       children: 'Receive DNSSEC data',
                       style: { fontSize: '11px', padding: `${tokens.spacingVerticalXXS} ${tokens.spacingHorizontalXS}` },
@@ -220,6 +242,10 @@ function DnsLookupRouteTool() {
                     indicator={{
                       style: {
                         margin: `${tokens.spacingVerticalXXS} ${tokens.spacingHorizontalXXS}`,
+                        animationName: submitting ? 'pulse' : 'none',
+                        animationDuration: '2s',
+                        animationTimingFunction: tokens.curveEasyEase,
+                        animationIterationCount: 'infinite',
                       },
                     }}
                   />
@@ -230,7 +256,9 @@ function DnsLookupRouteTool() {
         </div>
 
         <div style={{ margin: 'auto', marginTop: '1rem', width: 'fit-content' }}>
-          <Button type="submit">Submit</Button>
+          <Button type="submit">
+            {submitting ? <Spinner label="Submitting" appearance="inverted" size="extra-tiny" /> : <Text>Submit</Text>}
+          </Button>
         </div>
       </Form>
     </div>
