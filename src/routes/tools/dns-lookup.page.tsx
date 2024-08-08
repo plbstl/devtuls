@@ -45,7 +45,7 @@ const DnsLookupRoute = () => {
           </Body1>
         </div>
 
-        <TabList className={styles.headingTabs} defaultSelectedValue={defaultSelected}>
+        <TabList className={styles.headingTabs} selectedValue={defaultSelected}>
           <Link href={baseHref} appearance="subtle" className={styles.tabName}>
             <Tab value="tool">Tool</Tab>
           </Link>
