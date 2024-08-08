@@ -23,16 +23,19 @@ export const loader: LoaderFunction = ({ request }) => {
   }
 
   return json<DnsLookupLoaderData>({
+    serviceUrl: dohUrl ?? '',
     domainName: url.searchParams.get('name') ?? '',
     resourceRecordType: url.searchParams.get('type') ?? '',
     disableValidation: url.searchParams.get('cd') === '1' || url.searchParams.get('cd') === 'true',
     receiveDnssecData: url.searchParams.get('do') === '1' || url.searchParams.get('do') === 'true',
-    serviceUrl: dohUrl ?? '',
+    openToolConfig: url.searchParams.get('config') === '1' || url.searchParams.get('config') === 'true',
   })
 }
 
 /** Data returned by `/dns-lookup` route loader. */
-export type DnsLookupLoaderData = DnsLookupInput
+export type DnsLookupLoaderData = DnsLookupInput & {
+  openToolConfig?: boolean
+}
 
 /** `/dns-lookup` route action */
 export const action: ActionFunction = async ({ request }) => {

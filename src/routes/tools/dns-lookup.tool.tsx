@@ -38,11 +38,13 @@ function DnsLookupRouteTool() {
   const [resourceRecordType, setResourceRecordType] = useState(loaderData.resourceRecordType)
   const [disableValidation, setDisableValidation] = useState(loaderData.disableValidation)
   const [receiveDnssecData, setReceiveDnssecData] = useState(loaderData.receiveDnssecData)
+  const [openToolConfig, setOpenToolConfig] = useState(loaderData.openToolConfig)
   const [, setNameSearchParam] = useSearchParam('name')
   const [, setUrlSearchParam] = useSearchParam('url')
   const [, setTypeSearchParam] = useSearchParam('type')
   const [, setCdSearchParam] = useSearchParam('cd')
   const [, setDoSearchParam] = useSearchParam('do')
+  const [, setConfigSearchParam] = useSearchParam('config')
 
   // Allow browser history to update value.
   useEffect(() => setDomainName(loaderData.domainName), [loaderData.domainName])
@@ -50,6 +52,7 @@ function DnsLookupRouteTool() {
   useEffect(() => setResourceRecordType(loaderData.resourceRecordType), [loaderData.resourceRecordType])
   useEffect(() => setDisableValidation(loaderData.disableValidation), [loaderData.disableValidation])
   useEffect(() => setReceiveDnssecData(loaderData.receiveDnssecData), [loaderData.receiveDnssecData])
+  useEffect(() => setOpenToolConfig(loaderData.openToolConfig), [loaderData.openToolConfig])
 
   const handleSubmit = (ev: FormEvent<HTMLFormElement>) => {
     ev.preventDefault()
@@ -95,8 +98,15 @@ function DnsLookupRouteTool() {
         </Field>
 
         <div>
-          <Accordion collapsible>
-            <AccordionItem value="1">
+          <Accordion
+            collapsible
+            openItems={openToolConfig ? 'config' : ''}
+            onToggle={(_, { openItems }) => {
+              setOpenToolConfig(openItems.includes('config'))
+              setConfigSearchParam(openItems.includes('config') ? '1' : '0')
+            }}
+          >
+            <AccordionItem value="config">
               <AccordionHeader expandIconPosition="end" icon={<SettingsRegular />}>
                 Configuration
               </AccordionHeader>
