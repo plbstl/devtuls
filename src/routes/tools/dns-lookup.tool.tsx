@@ -95,7 +95,7 @@ function DnsLookupRouteTool() {
                 Configuration
               </AccordionHeader>
               <AccordionPanel style={{ padding: '0.15rem 0.15rem' }}>
-                <Field label="DNS-Over-HTTPS server URL" size="small">
+                <Field label="DNS-Over-HTTPS service URL" size="small">
                   <Input
                     form="dnsLookup"
                     name="url"
@@ -143,7 +143,7 @@ function DnsLookupRouteTool() {
                     }}
                   />
                 </Field>
-                <Field label="Resource Record (RR) type" style={{ marginTop: '0.75rem' }}>
+                <Field label="Resource Record (RR) type" style={{ marginTop: '0.75rem' }} size="small">
                   <Combobox
                     freeform
                     inlinePopup
@@ -200,7 +200,7 @@ function DnsLookupRouteTool() {
                     input={{ style: {} }}
                     label={{
                       children: 'Disable validation',
-                      style: { fontSize: '11px', padding: `${tokens.spacingVerticalXXS} ${tokens.spacingHorizontalXXS}` },
+                      style: { fontSize: '11px', padding: `${tokens.spacingVerticalXXS} ${tokens.spacingHorizontalXS}` },
                     }}
                     indicator={{
                       style: {
@@ -221,7 +221,7 @@ function DnsLookupRouteTool() {
                     input={{ style: {} }}
                     label={{
                       children: 'Receive DNSSEC data',
-                      style: { fontSize: '11px', padding: `${tokens.spacingVerticalXXS} ${tokens.spacingHorizontalXXS}` },
+                      style: { fontSize: '11px', padding: `${tokens.spacingVerticalXXS} ${tokens.spacingHorizontalXS}` },
                     }}
                     indicator={{
                       style: {
