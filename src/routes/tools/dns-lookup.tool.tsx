@@ -1,11 +1,13 @@
 /* eslint-disable @typescript-eslint/no-confusing-void-expression */
 
-import { ChangeEvent, useEffect, useState, type FormEvent } from 'react'
+import { useEffect, useState, type ChangeEvent, type FormEvent } from 'react'
 import {
   Accordion,
   AccordionHeader,
   AccordionItem,
   AccordionPanel,
+  AccordionToggleData,
+  AccordionToggleEvent,
   Button,
   Combobox,
   Field,
@@ -16,15 +18,18 @@ import {
   MenuPopover,
   MenuTrigger,
   Option,
+  SelectionEvents,
   Spinner,
   Switch,
   Text,
   tokens,
+  type OptionOnSelectData,
+  type SwitchOnChangeData,
 } from '@fluentui/react-components'
 import { DatabaseLinkFilled, DocumentSearchFilled, GlobeSearchFilled, SettingsRegular } from '@fluentui/react-icons'
 import { Form, useLoaderData, useNavigation, useSubmit } from 'react-router-dom'
 import { DNS_RESOURCE_RECORD_TYPES } from '~/utils/dns-rrt-types'
-import { useSearchParam } from '~/utils/use-search-param'
+import { useSearchParams } from '~/utils/use-search-params'
 import { DnsLookupLoaderData } from './dns-lookup.lib'
 
 function DnsLookupRouteTool() {
@@ -32,27 +37,45 @@ function DnsLookupRouteTool() {
   const loaderData = useLoaderData() as DnsLookupLoaderData
   const navigation = useNavigation()
   const submitting = navigation.state === 'submitting'
+  const [, setSearchParams] = useSearchParams()
   // Controlled input is needed so that the caret movement is predictable, as we are syncing with search params.
-  const [domainName, setDomainName] = useState(loaderData.domainName)
-  const [serviceUrl, setServiceUrl] = useState(loaderData.serviceUrl)
-  const [resourceRecordType, setResourceRecordType] = useState(loaderData.resourceRecordType)
-  const [disableValidation, setDisableValidation] = useState(loaderData.disableValidation)
-  const [receiveDnssecData, setReceiveDnssecData] = useState(loaderData.receiveDnssecData)
-  const [openToolConfig, setOpenToolConfig] = useState(loaderData.openToolConfig)
-  const [, setNameSearchParam] = useSearchParam('name')
-  const [, setUrlSearchParam] = useSearchParam('url')
-  const [, setTypeSearchParam] = useSearchParam('type')
-  const [, setCdSearchParam] = useSearchParam('cd')
-  const [, setDoSearchParam] = useSearchParam('do')
-  const [, setConfigSearchParam] = useSearchParam('config')
+  const [formValue, setFormValue] = useState(() => {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { openToolConfig, ...rest } = loaderData
+    return rest
+  })
 
-  // Allow browser history to update value.
-  useEffect(() => setDomainName(loaderData.domainName), [loaderData.domainName])
-  useEffect(() => setServiceUrl(loaderData.serviceUrl), [loaderData.serviceUrl])
-  useEffect(() => setResourceRecordType(loaderData.resourceRecordType), [loaderData.resourceRecordType])
-  useEffect(() => setDisableValidation(loaderData.disableValidation), [loaderData.disableValidation])
-  useEffect(() => setReceiveDnssecData(loaderData.receiveDnssecData), [loaderData.receiveDnssecData])
-  useEffect(() => setOpenToolConfig(loaderData.openToolConfig), [loaderData.openToolConfig])
+  // Allow browser history to update form values.
+  useEffect(() => {
+    setFormValue(() => {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { openToolConfig, ...rest } = loaderData
+      return rest
+    })
+  }, [loaderData])
+
+  const handleInputChange = (ev: ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = ev.target
+    setFormValue({ ...formValue, [name]: value })
+    setSearchParams(name, value)
+  }
+
+  const handleConfigToggle = (_: AccordionToggleEvent, data: AccordionToggleData) => {
+    const opened = data.openItems.includes('config')
+    setSearchParams('config', opened ? '1' : '0')
+  }
+
+  const handleRrTypeOptionSelect = (_: SelectionEvents, data: OptionOnSelectData) => {
+    const value = data.optionText ?? ''
+    setFormValue({ ...formValue, resourceRecordType: value })
+    setSearchParams('type', value)
+  }
+
+  const handleSwitchChange = (ev: ChangeEvent<HTMLInputElement>, { checked }: SwitchOnChangeData) => {
+    const name = ev.target.name
+    setFormValue({ ...formValue, [name]: checked })
+    setSearchParams(name, checked ? '1' : '0')
+  }
 
   const handleSubmit = (ev: FormEvent<HTMLFormElement>) => {
     ev.preventDefault()
@@ -83,11 +106,8 @@ function DnsLookupRouteTool() {
             name="name"
             placeholder="github.com, google.com"
             contentBefore={<GlobeSearchFilled />}
-            value={domainName}
-            onChange={(_, { value }) => {
-              setDomainName(value)
-              setNameSearchParam(value)
-            }}
+            value={formValue.domainName}
+            onChange={handleInputChange}
             style={{
               animationName: submitting ? 'pulse' : 'none',
               animationDuration: '2s',
@@ -98,14 +118,7 @@ function DnsLookupRouteTool() {
         </Field>
 
         <div>
-          <Accordion
-            collapsible
-            openItems={openToolConfig ? 'config' : ''}
-            onToggle={(_, { openItems }) => {
-              setOpenToolConfig(openItems.includes('config'))
-              setConfigSearchParam(openItems.includes('config') ? '1' : '0')
-            }}
-          >
+          <Accordion collapsible openItems={loaderData.openToolConfig ? 'config' : ''} onToggle={handleConfigToggle}>
             <AccordionItem value="config">
               <AccordionHeader expandIconPosition="end" icon={<SettingsRegular />}>
                 Configuration
@@ -123,25 +136,25 @@ function DnsLookupRouteTool() {
                         </MenuTrigger>
                         <MenuPopover>
                           <MenuList>
-                            <MenuItem onClick={() => setUrlSearchParam('gg')}>
+                            <MenuItem onClick={() => setSearchParams('url', 'gg')}>
                               <Text block>Google Public DNS</Text>
                               <Text style={{ color: tokens.colorNeutralForeground4, fontSize: tokens.fontSizeBase200 }}>
                                 Google Public DNS
                               </Text>
                             </MenuItem>
-                            <MenuItem onClick={() => setUrlSearchParam('cf')}>
+                            <MenuItem onClick={() => setSearchParams('url', 'cf')}>
                               <Text block>Cloudflare DNS</Text>
                               <Text style={{ color: tokens.colorNeutralForeground4, fontSize: tokens.fontSizeBase200 }}>
                                 Default Security
                               </Text>
                             </MenuItem>
-                            <MenuItem onClick={() => setUrlSearchParam('cfm')}>
+                            <MenuItem onClick={() => setSearchParams('url', 'cfm')}>
                               <Text block>Cloudflare DNS Families (Malware)</Text>
                               <Text style={{ color: tokens.colorNeutralForeground4, fontSize: tokens.fontSizeBase200 }}>
                                 Block malicious content
                               </Text>
                             </MenuItem>
-                            <MenuItem onClick={() => setUrlSearchParam('cfa')}>
+                            <MenuItem onClick={() => setSearchParams('url', 'cfa')}>
                               <Text block>Cloudflare DNS Families (Malware/Adult)</Text>
                               <Text style={{ color: tokens.colorNeutralForeground4, fontSize: tokens.fontSizeBase200 }}>
                                 Block malicious and adult content
@@ -151,11 +164,8 @@ function DnsLookupRouteTool() {
                         </MenuPopover>
                       </Menu>
                     }
-                    value={serviceUrl}
-                    onChange={(_, { value }) => {
-                      setServiceUrl(value)
-                      setUrlSearchParam(value)
-                    }}
+                    value={formValue.serviceUrl}
+                    onChange={handleInputChange}
                     style={{
                       animationName: submitting ? 'pulse' : 'none',
                       animationDuration: '2s',
@@ -167,20 +177,13 @@ function DnsLookupRouteTool() {
                 <Field label="Resource Record (RR) type" style={{ marginTop: '0.75rem' }} size="small">
                   <Combobox
                     freeform
-                    inlinePopup
                     form="dnsLookup"
                     name="type"
                     placeholder="A"
                     expandIcon={<DocumentSearchFilled />}
-                    value={resourceRecordType}
-                    onOptionSelect={(_, data) => {
-                      setResourceRecordType(data.optionText ?? '')
-                      setTypeSearchParam(data.optionText ?? '')
-                    }}
-                    onInput={(ev: ChangeEvent<HTMLInputElement>) => {
-                      setResourceRecordType(ev.target.value)
-                      setTypeSearchParam(ev.target.value)
-                    }}
+                    value={formValue.resourceRecordType}
+                    onOptionSelect={handleRrTypeOptionSelect}
+                    onInput={handleInputChange}
                     input={{ style: { fontSize: '12px' } }}
                     style={{
                       animationName: submitting ? 'pulse' : 'none',
@@ -210,17 +213,12 @@ function DnsLookupRouteTool() {
                     ))}
                   </Combobox>
                 </Field>
-                <div
-                  style={{ display: 'flex', justifyContent: 'space-between', marginTop: '0.75rem', marginBottom: '1rem' }}
-                >
+                <div style={{ marginTop: '0.75rem', marginBottom: '1rem' }}>
                   <Switch
                     form="dnsLookup"
                     name="cd"
-                    checked={disableValidation}
-                    onChange={(_, { checked }) => {
-                      setDisableValidation(checked)
-                      setCdSearchParam(checked ? '1' : '0')
-                    }}
+                    checked={formValue.disableValidation}
+                    onChange={handleSwitchChange}
                     style={{ alignItems: 'center' }}
                     label={{
                       children: 'Disable validation',
@@ -239,12 +237,9 @@ function DnsLookupRouteTool() {
                   <Switch
                     form="dnsLookup"
                     name="do"
-                    checked={receiveDnssecData}
-                    onChange={(_, { checked }) => {
-                      setReceiveDnssecData(checked)
-                      setDoSearchParam(checked ? '1' : '0')
-                    }}
-                    style={{ alignItems: 'center' }}
+                    checked={formValue.receiveDnssecData}
+                    onChange={handleSwitchChange}
+                    style={{ alignItems: 'center', marginLeft: '1rem' }}
                     label={{
                       children: 'Receive DNSSEC data',
                       style: { fontSize: '11px', padding: `${tokens.spacingVerticalXXS} ${tokens.spacingHorizontalXS}` },
