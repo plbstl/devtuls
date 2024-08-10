@@ -11,7 +11,7 @@ import {
 } from '@fluentui/react-components'
 import { DocumentSearchFilled } from '@fluentui/react-icons'
 import { useLoaderData, useNavigation } from 'react-router-dom'
-import { DNS_RESOURCE_RECORD_TYPES } from '~/utils/dns-rrt-types'
+import { DNS_RESOURCE_RECORD_TYPES } from '~/utils/dns-rr-types'
 import { useSearchParams } from '~/utils/use-search-params'
 import type { DnsLookupLoaderData } from '../page.router'
 
