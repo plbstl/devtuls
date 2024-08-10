@@ -14,10 +14,11 @@ const meta: Meta<typeof DnsLookupRoute> = {
         resourceRecordType: type,
         disableValidation: cd,
         receiveDnssecData: d0,
+        openToolConfig: config,
       } = args as DnsLookupLoaderData
 
       const previewRouter = createMemoryRouter(routes, {
-        initialEntries: [`/dns-lookup?url=${url}&name=${name}&type=${type}&cd=${cd}&do=${d0}`],
+        initialEntries: [`/dns-lookup?config=${config}&url=${url}&name=${name}&type=${type}&cd=${cd}&do=${d0}`],
         future: {
           v7_fetcherPersist: true,
           v7_normalizeFormMethod: true,
@@ -35,9 +36,10 @@ const meta: Meta<typeof DnsLookupRoute> = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-type PreviewArgs = Omit<DnsLookupLoaderData, 'disableValidation' | 'receiveDnssecData'> & {
+type PreviewArgs = Omit<DnsLookupLoaderData, 'disableValidation' | 'receiveDnssecData' | 'openToolConfig'> & {
   disableValidation: string
   receiveDnssecData: string
+  openToolConfig: string
 }
 
 export const Preview = {
@@ -47,5 +49,6 @@ export const Preview = {
     resourceRecordType: 'A',
     disableValidation: '0',
     receiveDnssecData: 'true',
+    openToolConfig: '1',
   } satisfies PreviewArgs,
 } satisfies Story
