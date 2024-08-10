@@ -2,6 +2,7 @@ import type { FormEvent } from 'react'
 import { makeStyles, tokens } from '@fluentui/react-components'
 import { Form, useLoaderData, useNavigation, useSubmit } from 'react-router-dom'
 import type { DnsLookupLoaderData } from '../page.router'
+import ConfigurationAccordion from './configuration-accordion'
 import DomainNameInputField from './domain-name-input-field'
 import SubmitButton from './submit-button'
 
@@ -39,9 +40,7 @@ function DnsLookupRouteTool() {
     <div className={styles.container}>
       <Form id="dnsLookup" method="POST" onSubmit={handleSubmit}>
         <DomainNameInputField />
-
-        <div>Tool Config</div>
-
+        <ConfigurationAccordion />
         <SubmitButton />
       </Form>
 
