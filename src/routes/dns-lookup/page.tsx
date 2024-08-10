@@ -1,7 +1,7 @@
 import { Body1, makeStyles, Tab, TabList, Title2, tokens } from '@fluentui/react-components'
 import { useMatch } from 'react-router-dom'
 import Link from '~/components/Link'
-import DnsLookupRouteTool from './dns-lookup.tool'
+import DnsLookupRouteTool from './page.components'
 
 const useStyles = makeStyles({
   headingContainer: {

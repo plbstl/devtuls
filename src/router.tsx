@@ -17,18 +17,18 @@ const dnsLookupTool: RouteObject = {
   children: [
     {
       index: true,
-      lazy: () => import('./routes/tools/dns-lookup.page'),
+      lazy: () => import('./routes/dns-lookup/page'),
       loader: async (args) => {
-        const { loader } = await import('./routes/tools/dns-lookup.lib')
+        const { loader } = await import('./routes/dns-lookup/page.router')
         return loader(args)
       },
       action: async (args) => {
-        const { action } = await import('./routes/tools/dns-lookup.lib')
+        const { action } = await import('./routes/dns-lookup/page.router')
         return action(args)
       },
     },
-    { path: 'docs', lazy: () => import('./routes/tools/dns-lookup.page') },
-    { path: 'changelog', lazy: () => import('./routes/tools/dns-lookup.page') },
+    { path: 'docs', lazy: () => import('./routes/dns-lookup/page') },
+    { path: 'changelog', lazy: () => import('./routes/dns-lookup/page') },
   ],
 }
 

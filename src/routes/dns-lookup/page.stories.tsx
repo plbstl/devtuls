@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react'
 import { createMemoryRouter, RouterProvider, type RouteObject } from 'react-router-dom'
-import { loader, type DnsLookupLoaderData } from './dns-lookup.lib'
-import { Component as DnsLookupRoute } from './dns-lookup.page'
+import { Component as DnsLookupRoute } from './page'
+import { loader, type DnsLookupLoaderData } from './page.router'
 
 const meta: Meta<typeof DnsLookupRoute> = {
   component: DnsLookupRoute,

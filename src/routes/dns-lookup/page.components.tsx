@@ -30,7 +30,7 @@ import { DatabaseLinkFilled, DocumentSearchFilled, GlobeSearchFilled, SettingsRe
 import { Form, useLoaderData, useNavigation, useSubmit } from 'react-router-dom'
 import { DNS_RESOURCE_RECORD_TYPES } from '~/utils/dns-rrt-types'
 import { useSearchParams } from '~/utils/use-search-params'
-import { DnsLookupLoaderData } from './dns-lookup.lib'
+import type { DnsLookupLoaderData } from './page.router'
 
 function DnsLookupRouteTool() {
   const submit = useSubmit()
