@@ -4,7 +4,7 @@ import { useNavigation } from 'react-router-dom'
 const useStyles = makeStyles({
   container: {
     margin: 'auto',
-    marginTop: tokens.spacingVerticalL,
+    marginTop: tokens.spacingVerticalS,
     width: 'fit-content',
   },
 })
