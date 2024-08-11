@@ -7,12 +7,24 @@ import {
   DataGridHeaderCell,
   DataGridRow,
   makeStyles,
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuList,
+  MenuPopover,
+  MenuTrigger,
   TableColumnDefinition,
   TableColumnSizingOptions,
   Text,
   tokens,
 } from '@fluentui/react-components'
-import { DocumentCheckmarkRegular, DocumentDismissRegular } from '@fluentui/react-icons'
+import {
+  AppsListDetailRegular,
+  ArrowRepeatAllRegular,
+  DeleteRegular,
+  DocumentCheckmarkRegular,
+  DocumentDismissRegular,
+} from '@fluentui/react-icons'
 
 interface DnsRecord {
   status: 'success' | 'error'
@@ -127,12 +139,31 @@ const columns: TableColumnDefinition<DnsRecord>[] = [
     columnId: 'status',
     compare: (a, b) => b.status.localeCompare(a.status), // success is first in ascending order.
     renderHeaderCell: () => <Text aria-label="Status">-</Text>,
-    renderCell: (item) =>
-      item.status === 'success' ? (
-        <DocumentCheckmarkRegular color={tokens.colorPaletteLightGreenForeground3} />
-      ) : (
-        <DocumentDismissRegular color={tokens.colorPaletteRedBackground3} />
-      ),
+    renderCell: (item) => (
+      <Menu>
+        <MenuTrigger disableButtonEnhancement>
+          <MenuButton
+            aria-label="Show row options"
+            appearance="subtle"
+            style={{ marginLeft: '-2px' }}
+            icon={
+              item.status === 'success' ? (
+                <DocumentCheckmarkRegular color={tokens.colorPaletteLightGreenForeground3} />
+              ) : (
+                <DocumentDismissRegular color={tokens.colorPaletteRedBackground3} />
+              )
+            }
+          />
+        </MenuTrigger>
+        <MenuPopover>
+          <MenuList>
+            <MenuItem icon={<AppsListDetailRegular />}>View details</MenuItem>
+            <MenuItem icon={<ArrowRepeatAllRegular />}>Load input</MenuItem>
+            <MenuItem icon={<DeleteRegular />}>Remove entry</MenuItem>
+          </MenuList>
+        </MenuPopover>
+      </Menu>
+    ),
   }),
   createTableColumn<DnsRecord>({
     columnId: 'type',
@@ -172,8 +203,8 @@ const columns: TableColumnDefinition<DnsRecord>[] = [
 
 const columnSizingOptions: TableColumnSizingOptions = {
   status: {
-    minWidth: 40,
-    idealWidth: 45,
+    minWidth: 45,
+    idealWidth: 50,
   },
   type: {
     minWidth: 70,
