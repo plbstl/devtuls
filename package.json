@@ -30,6 +30,7 @@
     "vitest:ui": "vitest --ui"
   },
   "dependencies": {
+    "@fluentui-contrib/react-data-grid-react-window": "^1.2.0",
     "@fluentui/react-components": "^9.54.10",
     "@fluentui/react-icons": "^2.0.253",
     "punycode": "^2.3.1",
