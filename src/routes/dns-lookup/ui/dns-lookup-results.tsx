@@ -16,7 +16,7 @@ const DnsLookupResults = () => {
 
   return (
     <div className={styles.results}>
-      {/* <DnsLookupResultsCard /> */}
+      <DnsLookupResultsCard />
       <DnsLookupResultsHistory />
     </div>
   )

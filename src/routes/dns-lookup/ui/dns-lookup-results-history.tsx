@@ -54,7 +54,8 @@ const columns: TableColumnDefinition<DnsRecord>[] = [
     renderHeaderCell: () => 'Result',
     renderCell: (item) => (
       <>
-        {item.status === 'error' && <b style={{ color: tokens.colorStatusDangerForeground1 }}>ERROR:</b>} {item.result}
+        {item.status === 'error' && <b style={{ color: tokens.colorStatusDangerForeground1 }}>ERROR:</b>}{' '}
+        {item.result.data.join(', ')}
       </>
     ),
   }),
