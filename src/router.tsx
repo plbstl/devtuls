@@ -7,11 +7,6 @@ const index: RouteObject = {
   lazy: () => import('./routes/index'),
 }
 
-const about: RouteObject = {
-  path: 'about',
-  lazy: () => import('./routes/about'),
-}
-
 const dnsLookupTool: RouteObject = {
   path: 'dns-lookup',
   children: [
@@ -37,7 +32,7 @@ const routes: RouteObject[] = [
     path: '/',
     element: <RootLayout />,
     errorElement: <ErrorPage />,
-    children: [index, about, dnsLookupTool],
+    children: [index, dnsLookupTool],
   },
 ]
 
