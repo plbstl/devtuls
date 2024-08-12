@@ -20,40 +20,82 @@ import {
   tokens,
 } from '@fluentui/react-components'
 import { AppsListDetailRegular, ArrowRepeatAllRegular, DeleteRegular, MoreHorizontalRegular } from '@fluentui/react-icons'
+import { useNavigate } from 'react-router-dom'
+import type { DnsLookupInput } from '~/lib/dns-lookup'
 import useLocalStorage from '~/utils/use-local-storage'
+import { useSearchParams } from '~/utils/use-search-params'
 
-interface DnsRecord {
+export interface DnsRecord {
   status: 'success' | 'error'
   type: string
   host: string
   result: string
   service: string
   timestamp: number
+  input: Partial<DnsLookupInput>
 }
 
 const columns: TableColumnDefinition<DnsRecord>[] = [
   createTableColumn<DnsRecord>({
     columnId: 'options',
     renderHeaderCell: () => <Text aria-label="Options" />,
-    renderCell: () => (
-      <Menu>
-        <MenuTrigger>
-          <MenuButton
-            aria-label="Show row options"
-            appearance="subtle"
-            style={{ marginLeft: '-2px' }}
-            icon={<MoreHorizontalRegular />}
-          />
-        </MenuTrigger>
-        <MenuPopover>
-          <MenuList>
-            <MenuItem icon={<AppsListDetailRegular />}>View details</MenuItem>
-            <MenuItem icon={<ArrowRepeatAllRegular />}>Load input</MenuItem>
-            <MenuItem icon={<DeleteRegular />}>Remove entry</MenuItem>
-          </MenuList>
-        </MenuPopover>
-      </Menu>
-    ),
+    renderCell: ({ input, timestamp }) => {
+      // eslint-disable-next-line react-hooks/rules-of-hooks
+      const navigate = useNavigate()
+      // eslint-disable-next-line react-hooks/rules-of-hooks
+      const [, setViewedItemTimestamp] = useLocalStorage('viewedItemTimestamp')
+      // eslint-disable-next-line react-hooks/rules-of-hooks
+      const [items, setItems] = useLocalStorage<DnsRecord[]>('items', [])
+      // eslint-disable-next-line react-hooks/rules-of-hooks
+      const [searchParams] = useSearchParams()
+
+      return (
+        <Menu>
+          <MenuTrigger>
+            <MenuButton
+              aria-label="Show row options"
+              appearance="subtle"
+              style={{ marginLeft: '-2px' }}
+              icon={<MoreHorizontalRegular />}
+            />
+          </MenuTrigger>
+          <MenuPopover>
+            <MenuList>
+              <MenuItem
+                icon={<AppsListDetailRegular />}
+                onClick={() => {
+                  setViewedItemTimestamp(timestamp)
+                }}
+              >
+                View details
+              </MenuItem>
+              <MenuItem
+                icon={<ArrowRepeatAllRegular />}
+                onClick={() => {
+                  const newSearchParamsString = `url=${input.serviceUrl ?? ''}&name=${input.domainName ?? ''}&type=${input.resourceRecordType ?? ''}&cd=${input.disableValidation ?? ''}&do=${input.receiveDnssecData ?? ''}&config=${searchParams.get('config') ?? ''}`
+                  console.log(newSearchParamsString)
+                  console.log(searchParams.toString())
+                  console.log(newSearchParamsString === searchParams.toString())
+
+                  if (newSearchParamsString === searchParams.toString()) return
+                  navigate(`/dns-lookup?${newSearchParamsString}`)
+                }}
+              >
+                Load input
+              </MenuItem>
+              <MenuItem
+                icon={<DeleteRegular />}
+                onClick={() => {
+                  setItems(items.filter((singleItem) => singleItem.timestamp !== timestamp))
+                }}
+              >
+                Remove entry
+              </MenuItem>
+            </MenuList>
+          </MenuPopover>
+        </Menu>
+      )
+    },
   }),
   createTableColumn<DnsRecord>({
     columnId: 'type',
