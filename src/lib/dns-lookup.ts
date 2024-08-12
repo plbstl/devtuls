@@ -33,7 +33,7 @@ async function dnsLookup(input: Partial<DnsLookupInput>): Promise<DnsLookupOutpu
   if (response.status !== 200) {
     let errorText = `Service responded with a ${response.status} ${response.statusText}`
 
-    if (dohUrl.endsWith('.cloudflare-dns.com/dns-query')) {
+    if (dohUrl.endsWith('cloudflare-dns.com/dns-query')) {
       // Cloudflare (maybe others) sends an error field in JSON
       errorText = ((await response.json()) as { error: string }).error
     } else {
