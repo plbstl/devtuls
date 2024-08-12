@@ -17,7 +17,7 @@ const Link: ForwardRefComponent<LinkProps> = forwardRef((props, ref) => {
   return (
     // @ts-expect-error - href is an optional string
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-    <RouterLink className={state.root.className} to={state.root.href ?? '#'}>
+    <RouterLink className={state.root.className} to={state.root.href ?? '#'} {...state.root}>
       {state.root.children}
     </RouterLink>
   )
