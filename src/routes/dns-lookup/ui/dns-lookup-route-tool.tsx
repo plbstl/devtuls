@@ -9,7 +9,7 @@ import SubmitButton from './submit-button'
 
 const useStyles = makeStyles({
   container: {
-    padding: `${tokens.spacingVerticalL} ${tokens.spacingHorizontalL}`,
+    padding: `${tokens.spacingVerticalM} ${tokens.spacingHorizontalM}`,
   },
 })
 
