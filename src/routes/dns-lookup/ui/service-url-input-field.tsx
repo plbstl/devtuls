@@ -53,6 +53,7 @@ function ServiceUrlInputField() {
         form="dnsLookup"
         name="url"
         placeholder={dohResolvers.Google}
+        autoComplete="off"
         contentAfter={<DnsServiceOptions />}
         value={serviceUrl}
         onChange={(_, { value }) => {

@@ -72,6 +72,7 @@ function ResourceRecordTypeInputField() {
         form="dnsLookup"
         name="type"
         placeholder="A"
+        autoComplete="off"
         expandIcon={<DocumentSearchFilled />}
         value={resourceRecordType}
         onInput={handleInputChange}

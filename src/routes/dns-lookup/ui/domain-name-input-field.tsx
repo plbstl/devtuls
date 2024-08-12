@@ -36,6 +36,7 @@ function DomainNameInputField() {
         form="dnsLookup"
         name="name"
         placeholder="github.com, google.com"
+        autoComplete="off"
         contentBefore={<GlobeSearchFilled />}
         value={domainName}
         onChange={(_, { value }) => {
