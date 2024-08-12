@@ -35,8 +35,8 @@ const useStyles = makeStyles({
 const DnsLookupResultCard = () => {
   const styles = useStyles()
   const [dnsLookupHistory] = useLocalStorage<DnsRecord[]>('dnsLookupHistory', [])
-  const [viewedItemTimestamp] = useLocalStorage('viewedItemTimestamp')
-  const historyItem = dnsLookupHistory.find((item) => item.timestamp === viewedItemTimestamp)
+  const [viewedDnsLookupHistoryTimestamp] = useLocalStorage('viewedDnsLookupHistoryTimestamp')
+  const historyItem = dnsLookupHistory.find((item) => item.timestamp === viewedDnsLookupHistoryTimestamp)
 
   if (!historyItem) return null
 

@@ -19,12 +19,12 @@ const useStyles = makeStyles({
 const RowOptionsMenu = ({ input, timestamp }: RowOptionsMenuProps) => {
   const styles = useStyles()
   const navigate = useNavigate()
-  const [, setViewedItemTimestamp] = useLocalStorage('viewedItemTimestamp')
+  const [, setViewedDnsLookupHistoryTimestamp] = useLocalStorage('viewedDnsLookupHistoryTimestamp')
   const [dnsLookupHistory, setDnsLookupHistory] = useLocalStorage<DnsRecord[]>('dnsLookupHistory', [])
   const [searchParams] = useSearchParams()
 
   const handleViewDetailsClick = () => {
-    setViewedItemTimestamp(timestamp)
+    setViewedDnsLookupHistoryTimestamp(timestamp)
   }
 
   const handleLoadInputClick = () => {
