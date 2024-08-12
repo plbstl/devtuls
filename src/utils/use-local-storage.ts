@@ -34,8 +34,31 @@ function useLocalStorage<T>(key: string, defaultValue?: T) {
    */
   function setNewValue(newValue?: T) {
     try {
-      if (newValue) window.localStorage.setItem(key, JSON.stringify(newValue))
-      else window.localStorage.removeItem(key)
+      if (newValue) {
+        const newValueAsJson = JSON.stringify(newValue)
+        window.localStorage.setItem(key, newValueAsJson)
+        // Browsers ONLY dispatch storage events to other tabs, NOT the current tab.
+        // We need to manually dispatch a storage event for the current tab.
+        window.dispatchEvent(
+          new StorageEvent('storage', {
+            storageArea: window.localStorage,
+            url: window.location.href,
+            key,
+            newValue: newValueAsJson,
+          }),
+        )
+      } else {
+        window.localStorage.removeItem(key)
+        // Browsers ONLY dispatch storage events to other tabs, NOT the current tab.
+        // We need to manually dispatch a storage event for the current tab.
+        window.dispatchEvent(
+          new StorageEvent('storage', {
+            storageArea: window.localStorage,
+            url: window.location.href,
+            key,
+          }),
+        )
+      }
       setValue(newValue)
     } catch (error) {
       console.warn(error)
