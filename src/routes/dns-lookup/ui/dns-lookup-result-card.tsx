@@ -1,7 +1,7 @@
 import { Card, makeStyles, shorthands, tokens } from '@fluentui/react-components'
 import { List, ListItem } from '@fluentui/react-list-preview'
 import useLocalStorage from '~/utils/use-local-storage'
-import type { DnsRecord } from './dns-lookup-results-history'
+import type { DnsLookupResult } from './dns-lookup-results-history'
 
 const useStyles = makeStyles({
   card: {
@@ -34,7 +34,7 @@ const useStyles = makeStyles({
 
 const DnsLookupResultCard = () => {
   const styles = useStyles()
-  const [dnsLookupHistory] = useLocalStorage<DnsRecord[]>('dnsLookupHistory', [])
+  const [dnsLookupHistory] = useLocalStorage<DnsLookupResult[]>('dnsLookupHistory', [])
   const [viewedDnsLookupHistoryTimestamp] = useLocalStorage('viewedDnsLookupHistoryTimestamp')
   const historyItem = dnsLookupHistory.find((item) => item.timestamp === viewedDnsLookupHistoryTimestamp)
 

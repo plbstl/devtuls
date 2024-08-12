@@ -3,11 +3,11 @@ import { AppsListDetailRegular, ArrowRepeatAllRegular, DeleteRegular, MoreHorizo
 import { useNavigate } from 'react-router-dom'
 import useLocalStorage from '~/utils/use-local-storage'
 import { useSearchParams } from '~/utils/use-search-params'
-import type { DnsRecord } from './dns-lookup-results-history'
+import type { DnsLookupResult } from './dns-lookup-results-history'
 
 interface RowOptionsMenuProps {
-  input: DnsRecord['input']
-  timestamp: DnsRecord['timestamp']
+  input: DnsLookupResult['input']
+  timestamp: DnsLookupResult['timestamp']
 }
 
 const useStyles = makeStyles({
@@ -20,7 +20,7 @@ const RowOptionsMenu = ({ input, timestamp }: RowOptionsMenuProps) => {
   const styles = useStyles()
   const navigate = useNavigate()
   const [, setViewedDnsLookupHistoryTimestamp] = useLocalStorage('viewedDnsLookupHistoryTimestamp')
-  const [dnsLookupHistory, setDnsLookupHistory] = useLocalStorage<DnsRecord[]>('dnsLookupHistory', [])
+  const [dnsLookupHistory, setDnsLookupHistory] = useLocalStorage<DnsLookupResult[]>('dnsLookupHistory', [])
   const [searchParams] = useSearchParams()
 
   const handleViewDetailsClick = () => {

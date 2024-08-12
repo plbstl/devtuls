@@ -17,7 +17,7 @@ import type { DnsLookupInput } from '~/lib/dns-lookup'
 import useLocalStorage from '~/utils/use-local-storage'
 import RowOptionsMenu from './row-options-menu'
 
-export interface DnsRecord {
+export interface DnsLookupResult {
   status: 'success' | 'error'
   type: string
   host: string
@@ -31,25 +31,25 @@ export interface DnsRecord {
   input: Partial<DnsLookupInput>
 }
 
-const columns: TableColumnDefinition<DnsRecord>[] = [
-  createTableColumn<DnsRecord>({
+const columns: TableColumnDefinition<DnsLookupResult>[] = [
+  createTableColumn<DnsLookupResult>({
     columnId: 'options',
     renderHeaderCell: () => <Text aria-label="Options" />,
     renderCell: (item) => <RowOptionsMenu input={item.input} timestamp={item.timestamp} />,
   }),
-  createTableColumn<DnsRecord>({
+  createTableColumn<DnsLookupResult>({
     columnId: 'type',
     compare: (a, b) => a.type.localeCompare(b.type),
     renderHeaderCell: () => 'Type',
     renderCell: (item) => item.type,
   }),
-  createTableColumn<DnsRecord>({
+  createTableColumn<DnsLookupResult>({
     columnId: 'host',
     compare: (a, b) => a.host.localeCompare(b.host),
     renderHeaderCell: () => 'Host',
     renderCell: (item) => item.host,
   }),
-  createTableColumn<DnsRecord>({
+  createTableColumn<DnsLookupResult>({
     columnId: 'result',
     renderHeaderCell: () => 'Result',
     renderCell: (item) => (
@@ -59,13 +59,13 @@ const columns: TableColumnDefinition<DnsRecord>[] = [
       </>
     ),
   }),
-  createTableColumn<DnsRecord>({
+  createTableColumn<DnsLookupResult>({
     columnId: 'service',
     compare: (a, b) => a.service.localeCompare(b.service),
     renderHeaderCell: () => 'Service Used',
     renderCell: (item) => item.service,
   }),
-  createTableColumn<DnsRecord>({
+  createTableColumn<DnsLookupResult>({
     columnId: 'timestamp',
     compare: (a, b) => a.timestamp.toString().localeCompare(b.timestamp.toString()),
     renderHeaderCell: () => 'Timestamp',
@@ -110,9 +110,9 @@ const DnsLookupResultsHistory = () => {
             {({ renderHeaderCell }) => <DataGridHeaderCell>{renderHeaderCell()}</DataGridHeaderCell>}
           </DataGridRow>
         </DataGridHeader>
-        <DataGridBody<DnsRecord>>
+        <DataGridBody<DnsLookupResult>>
           {({ item, rowId }) => (
-            <DataGridRow<DnsRecord> key={rowId}>
+            <DataGridRow<DnsLookupResult> key={rowId}>
               {({ renderCell }) => (
                 <DataGridCell>
                   <TableCellLayout truncate>{renderCell(item)}</TableCellLayout>

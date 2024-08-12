@@ -1,6 +1,6 @@
-import { DnsRecord } from './dns-lookup-results-history'
+import { DnsLookupResult } from './dns-lookup-results-history'
 
-export const dnsLookupHistory: DnsRecord[] = [
+export const dnsLookupHistory: DnsLookupResult[] = [
   {
     status: 'success',
     type: 'TXT',
