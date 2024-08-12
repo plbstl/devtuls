@@ -1,10 +1,14 @@
 :root {
-  background-color: var(--colorNeutralBackground1, #292929);
-  color: var(--colorNeutralForeground1, #ffffff);
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    background-color: var(--colorNeutralBackground1, #292929);
+  }
 }
 
 *,
