@@ -44,7 +44,7 @@ function ResourceRecordTypeInputField() {
   const loaderData = useLoaderData() as DnsLookupLoaderData
   const navigation = useNavigation()
   const submitting = navigation.state === 'submitting'
-  const [, setSearchParams] = useSearchParams()
+  const [, setSearchParam] = useSearchParams()
   // Controlled input is needed so that the caret movement is predictable, as we are syncing with search params.
   const [resourceRecordType, setResourceRecordType] = useState(loaderData.resourceRecordType)
 
@@ -56,13 +56,13 @@ function ResourceRecordTypeInputField() {
   const handleInputChange = (ev: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = ev.target
     setResourceRecordType(value)
-    setSearchParams(name, value)
+    setSearchParam(name, value)
   }
 
   const handleRrTypeOptionSelect = (_: SelectionEvents, data: OptionOnSelectData) => {
     const value = data.optionText ?? ''
     setResourceRecordType(value)
-    setSearchParams('type', value)
+    setSearchParam('type', value)
   }
 
   return (

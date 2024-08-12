@@ -28,7 +28,7 @@ function ValidationAndDnssecDataSwitchInputs() {
   const loaderData = useLoaderData() as DnsLookupLoaderData
   const navigation = useNavigation()
   const submitting = navigation.state === 'submitting'
-  const [, setSearchParams] = useSearchParams()
+  const [, setSearchParam] = useSearchParams()
 
   const configs = [
     { name: 'cd', checked: loaderData.disableValidation, label: 'Disable validation' },
@@ -45,7 +45,7 @@ function ValidationAndDnssecDataSwitchInputs() {
           name={config.name}
           checked={config.checked}
           onChange={(ev, data) => {
-            setSearchParams(ev.target.name, data.checked ? '1' : '0')
+            setSearchParam(ev.target.name, data.checked ? '1' : '0')
           }}
           className={styles.switchRoot}
           label={{

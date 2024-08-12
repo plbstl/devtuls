@@ -8,7 +8,7 @@ export function useSearchParams() {
   const [reactRouterSearchParams, setReactRouterSearchParams] = useReactRouterSearchParams()
 
   /** Updates a specific search param with a value. */
-  function setSearchParams(name: string, value: string) {
+  function setSearchParam(name: string, value: string) {
     const oldSearchParams = new URLSearchParams(reactRouterSearchParams)
     if (oldSearchParams.has(name)) {
       // Update the specific search param in place.
@@ -26,5 +26,5 @@ export function useSearchParams() {
   }
 
   // Return the current value and a function to update it.
-  return [reactRouterSearchParams, setSearchParams] as const
+  return [reactRouterSearchParams, setSearchParam] as const
 }

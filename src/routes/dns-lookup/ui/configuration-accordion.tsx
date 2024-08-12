@@ -25,11 +25,11 @@ const useStyles = makeStyles({
 function ConfigurationAccordion() {
   const styles = useStyles()
   const loaderData = useLoaderData() as DnsLookupLoaderData
-  const [, setSearchParams] = useSearchParams()
+  const [, setSearchParam] = useSearchParams()
 
   const handleConfigToggle = (_: AccordionToggleEvent, data: AccordionToggleData) => {
     const opened = data.openItems.includes('config')
-    setSearchParams('config', opened ? '1' : '0')
+    setSearchParam('config', opened ? '1' : '0')
   }
 
   return (

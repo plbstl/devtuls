@@ -38,7 +38,7 @@ function ServiceUrlInputField() {
   const loaderData = useLoaderData() as DnsLookupLoaderData
   const navigation = useNavigation()
   const submitting = navigation.state === 'submitting'
-  const [, setSearchParams] = useSearchParams()
+  const [, setSearchParam] = useSearchParams()
   // Controlled input is needed so that the caret movement is predictable, as we are syncing with search params.
   const [serviceUrl, setServiceUrl] = useState(loaderData.serviceUrl)
 
@@ -57,7 +57,7 @@ function ServiceUrlInputField() {
         value={serviceUrl}
         onChange={(_, { value }) => {
           setServiceUrl(value)
-          setSearchParams('url', value)
+          setSearchParam('url', value)
         }}
         className={styles.input}
         style={{ animationName: submitting ? 'pulse' : 'none' }}
@@ -68,10 +68,10 @@ function ServiceUrlInputField() {
 
 function DnsServiceOptions() {
   const styles = useStyles()
-  const [, setSearchParams] = useSearchParams()
+  const [, setSearchParam] = useSearchParams()
 
   const setUrlSearchParamTo = (value: string) => () => {
-    setSearchParams('url', value)
+    setSearchParam('url', value)
   }
 
   return (
