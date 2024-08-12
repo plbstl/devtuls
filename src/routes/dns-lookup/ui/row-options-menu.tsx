@@ -19,7 +19,7 @@ const useStyles = makeStyles({
 const RowOptionsMenu = ({ input, timestamp }: RowOptionsMenuProps) => {
   const styles = useStyles()
   const navigate = useNavigate()
-  const [, setViewedDnsLookupHistoryTimestamp] = useLocalStorage('viewedDnsLookupHistoryTimestamp')
+  const [, setViewedDnsLookupHistoryTimestamp] = useLocalStorage<number>('viewedDnsLookupHistoryTimestamp')
   const [dnsLookupHistory, setDnsLookupHistory] = useLocalStorage<DnsLookupResult[]>('dnsLookupHistory', [])
   const [searchParams] = useSearchParams()
 

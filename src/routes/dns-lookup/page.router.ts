@@ -41,6 +41,8 @@ export type DnsLookupLoaderData = DnsLookupInput & {
 export const action: ActionFunction = async ({ request }) => {
   const submittedData = (await request.json()) as DnsLookupLoaderData
   const result = await dnsLookup(submittedData)
+  console.log({ result })
+
   return json<DnsLookupActionData>(result)
 }
 

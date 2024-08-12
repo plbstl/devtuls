@@ -4,7 +4,7 @@ import { useSearchParams as useReactRouterSearchParams } from 'react-router-dom'
  * Read and update the `URLSearchParams` without deleting previous parameters.
  */
 export function useSearchParams() {
-  // Get the search params from the URL
+  // Get the search params from the URL.
   const [reactRouterSearchParams, setReactRouterSearchParams] = useReactRouterSearchParams()
 
   /** Updates a specific search param with a value. */

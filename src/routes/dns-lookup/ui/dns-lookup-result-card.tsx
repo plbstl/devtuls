@@ -1,5 +1,6 @@
-import { Card, makeStyles, shorthands, tokens } from '@fluentui/react-components'
+import { Card, makeStyles, shorthands, Text, tokens } from '@fluentui/react-components'
 import { List, ListItem } from '@fluentui/react-list-preview'
+import { DNS_RESOURCE_RECORD_TYPES } from '~/utils/dns-rr-types'
 import useLocalStorage from '~/utils/use-local-storage'
 import type { DnsLookupResult } from './dns-lookup-results-history'
 
@@ -13,22 +14,6 @@ const useStyles = makeStyles({
   divider: {
     border: 'none',
     ...shorthands.borderBottom('.1px', 'groove', tokens.colorNeutralForeground3),
-    marginBottom: tokens.spacingVerticalS,
-  },
-  txtList: {
-    overflowX: 'auto',
-  },
-  txtListItem: {
-    marginTop: tokens.spacingVerticalS,
-  },
-  dnsData: {
-    overflowWrap: 'anywhere',
-  },
-  txtKey: {
-    fontWeight: '600',
-  },
-  txtValue: {
-    overflowWrap: 'anywhere',
   },
 })
 
@@ -40,47 +25,39 @@ const DnsLookupResultCard = () => {
 
   if (!historyItem) return null
 
-  const TxtRecord = ({ index, txtRecord }: { index: number; txtRecord: string }) => (
-    <>
-      {index !== 0 && <hr className={styles.divider} />}
-      <b className={styles.txtKey}>{txtRecord.split('=').at(0)}=</b>
-      <br />
-      <span className={styles.txtValue}>{txtRecord.split('=').at(1)}</span>
-    </>
-  )
-
   return (
     <Card className={styles.card}>
-      <List>
-        <ListItem className={styles.listItem}>
-          <b>Type:</b> {historyItem.result.type}
-        </ListItem>
+      <header style={{ fontStyle: 'italic' }}>
+        <Text block as="p" style={{ fontSize: tokens.fontSizeBase100 }}>
+          - {historyItem.serviceUsed} <br />- {historyItem.timestamp}
+        </Text>
+      </header>
+      {historyItem.results.map((result, index) => (
+        <>
+          {index !== 0 && <hr className={styles.divider} />}
 
-        <ListItem className={styles.listItem}>
-          <b>TTL:</b> {historyItem.result.ttl}
-        </ListItem>
-
-        <ListItem className={styles.listItem}>
-          <b>Host:</b> {historyItem.host}
-        </ListItem>
-
-        <ListItem className={styles.listItem}>
-          <b>Data:</b>
-          <List className={styles.txtList}>
-            {historyItem.result.data.map((dataItem, index) => (
-              <ListItem key={index} className={styles.txtListItem}>
-                {historyItem.type.toUpperCase() === 'TXT' ? (
-                  <TxtRecord index={index} txtRecord={dataItem} />
-                ) : (
-                  <span className={styles.dnsData}>{dataItem}</span>
-                )}
-              </ListItem>
-            ))}
+          <List key={index}>
+            <ListItem className={styles.listItem}>
+              <b>Type:</b> {formatDnsResourceRecordTypeLabel(result.type)}
+            </ListItem>
+            <ListItem className={styles.listItem}>
+              <b>Domain Name:</b> {result.name}
+            </ListItem>
+            <ListItem className={styles.listItem}>
+              <b>TTL:</b> {result.TTL ?? '-'}
+            </ListItem>
+            <ListItem className={styles.listItem}>
+              <b>Data:</b> {result.data}
+            </ListItem>
           </List>
-        </ListItem>
-      </List>
+        </>
+      ))}
     </Card>
   )
 }
+
+// @ts-expect-error - No need for several gymnastics.
+// eslint-disable-next-line @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-member-access
+const formatDnsResourceRecordTypeLabel = (type: number) => DNS_RESOURCE_RECORD_TYPES[type].TYPE ?? '- '
 
 export default DnsLookupResultCard

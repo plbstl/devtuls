@@ -18,17 +18,11 @@ import useLocalStorage from '~/utils/use-local-storage'
 import RowOptionsMenu from './row-options-menu'
 
 export interface DnsLookupResult {
-  status: 'success' | 'error'
-  type: string
-  host: string
-  result: {
-    type: string
-    ttl: number
-    data: string[]
-  }
-  service: string
+  input: DnsLookupInput
+  results: { name: string; type: number; TTL?: number; data: string }[]
+  resultError: boolean
+  serviceUsed: string
   timestamp: number
-  input: Partial<DnsLookupInput>
 }
 
 const columns: TableColumnDefinition<DnsLookupResult>[] = [
@@ -39,31 +33,31 @@ const columns: TableColumnDefinition<DnsLookupResult>[] = [
   }),
   createTableColumn<DnsLookupResult>({
     columnId: 'type',
-    compare: (a, b) => a.type.localeCompare(b.type),
+    compare: (a, b) => a.input.resourceRecordType.localeCompare(b.input.resourceRecordType),
     renderHeaderCell: () => 'Type',
-    renderCell: (item) => item.type,
+    renderCell: (item) => item.input.resourceRecordType || 'A',
   }),
   createTableColumn<DnsLookupResult>({
     columnId: 'host',
-    compare: (a, b) => a.host.localeCompare(b.host),
+    compare: (a, b) => a.input.domainName.localeCompare(b.input.domainName),
     renderHeaderCell: () => 'Host',
-    renderCell: (item) => item.host,
+    renderCell: (item) => item.input.domainName || '-',
   }),
   createTableColumn<DnsLookupResult>({
-    columnId: 'result',
-    renderHeaderCell: () => 'Result',
+    columnId: 'results',
+    renderHeaderCell: () => 'Results',
     renderCell: (item) => (
       <>
-        {item.status === 'error' && <b style={{ color: tokens.colorStatusDangerForeground1 }}>ERROR:</b>}{' '}
-        {item.result.data.join(', ')}
+        {item.resultError && <b style={{ color: tokens.colorStatusDangerForeground1 }}>ERROR:</b>}{' '}
+        {item.results.map(({ data }) => data).join(', ') || '-'}
       </>
     ),
   }),
   createTableColumn<DnsLookupResult>({
-    columnId: 'service',
-    compare: (a, b) => a.service.localeCompare(b.service),
+    columnId: 'serviceUsed',
+    compare: (a, b) => a.serviceUsed.localeCompare(b.serviceUsed),
     renderHeaderCell: () => 'Service Used',
-    renderCell: (item) => item.service,
+    renderCell: (item) => item.serviceUsed,
   }),
   createTableColumn<DnsLookupResult>({
     columnId: 'timestamp',
@@ -77,8 +71,8 @@ const columnSizingOptions: TableColumnSizingOptions = {
   options: { minWidth: 45, idealWidth: 50 },
   type: { minWidth: 70, idealWidth: 90 },
   host: { minWidth: 150, idealWidth: 180 },
-  result: { minWidth: 280, idealWidth: 300 },
-  service: { minWidth: 250, idealWidth: 280 },
+  results: { minWidth: 280, idealWidth: 300 },
+  serviceUsed: { minWidth: 250, idealWidth: 280 },
   timestamp: { minWidth: 170, idealWidth: 190 },
 }
 

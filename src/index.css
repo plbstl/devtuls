@@ -16,10 +16,8 @@
 }
 
 body {
-  min-height: 100vh;
   max-width: 880px;
   margin: auto;
-  box-shadow: 0 0 2px gray;
 }
 
 @keyframes pulse {
