@@ -1,18 +1,12 @@
-# DNS Lookup
-
-Query any DNS resolver service that supports DNS-over-HTTPS and JSON queries.
-
-<details>
-<summary>More information about DNS.</summary>
-<br/>
-
 **Domain Name System**, or **DNS** for short, is a protocol that translates human-friendly domain names (`www.example.com`) into IP addresses (`192.0.17.3`) that computers use to identify each other on the internet.
 
 It is like an internet phone book, as it is much easier for us to remember a website's name than its IP address.
 
-**DNS lookup** is the process of querying DNS servers to retrieve relevant information for a domain name. **DNS servers** are computers that store DNS records. **DNS records** map domain names to IP addresses and other information.
+**DNS lookup** is the process of querying DNS servers to retrieve relevant information for a domain name.
 
-</details>
+**DNS servers** are computers that store DNS records.
+
+**DNS records** map domain names to IP addresses and other information.
 
 ## Inputs
 

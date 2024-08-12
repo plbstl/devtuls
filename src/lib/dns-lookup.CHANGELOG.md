@@ -1,3 +1,5 @@
-# DNS Lookup Changelog
+## Unreleased
 
-All notable changes to the DNS Lookup tool in Devtuls will be documented in this file.
+### New Features
+
+- Added DNS Lookup tool.
