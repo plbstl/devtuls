@@ -1,5 +1,5 @@
 import { makeStyles, tokens } from '@fluentui/react-components'
-import DnsLookupResultsCard from './dns-lookup-results-card'
+import DnsLookupResultCard from './dns-lookup-result-card'
 import DnsLookupResultsHistory from './dns-lookup-results-history'
 import { items } from './tmp-items'
 
@@ -16,7 +16,7 @@ const DnsLookupResults = () => {
 
   return (
     <div className={styles.results}>
-      <DnsLookupResultsCard />
+      <DnsLookupResultCard />
       <DnsLookupResultsHistory />
     </div>
   )

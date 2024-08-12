@@ -32,7 +32,7 @@ const useStyles = makeStyles({
   },
 })
 
-const DnsLookupResultsCard = () => {
+const DnsLookupResultCard = () => {
   const styles = useStyles()
   const [items] = useLocalStorage<DnsRecord[]>('items', [])
   const [viewedItemTimestamp] = useLocalStorage('viewedItemTimestamp')
@@ -83,4 +83,4 @@ const DnsLookupResultsCard = () => {
   )
 }
 
-export default DnsLookupResultsCard
+export default DnsLookupResultCard
