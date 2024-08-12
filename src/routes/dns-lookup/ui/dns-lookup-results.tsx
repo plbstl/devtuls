@@ -1,7 +1,7 @@
 import { makeStyles, tokens } from '@fluentui/react-components'
 import DnsLookupResultCard from './dns-lookup-result-card'
 import DnsLookupResultsHistory from './dns-lookup-results-history'
-import { items } from './tmp-items'
+import { dnsLookupHistory } from './tmp-items'
 
 const useStyles = makeStyles({
   results: {
@@ -12,7 +12,7 @@ const useStyles = makeStyles({
 const DnsLookupResults = () => {
   const styles = useStyles()
 
-  localStorage.setItem('items', JSON.stringify(items))
+  localStorage.setItem('dnsLookupHistory', JSON.stringify(dnsLookupHistory))
 
   return (
     <div className={styles.results}>

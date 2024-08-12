@@ -91,9 +91,9 @@ const useStyles = makeStyles({
 
 const DnsLookupResultsHistory = () => {
   const styles = useStyles()
-  const [items] = useLocalStorage('items', [])
+  const [dnsLookupHistory] = useLocalStorage('dnsLookupHistory', [])
 
-  if (!items.length) return null
+  if (!dnsLookupHistory.length) return null
 
   return (
     <div className={styles.table}>
@@ -101,7 +101,7 @@ const DnsLookupResultsHistory = () => {
         sortable
         resizableColumns
         focusMode="composite"
-        items={items}
+        items={dnsLookupHistory}
         columns={columns}
         columnSizingOptions={columnSizingOptions}
       >

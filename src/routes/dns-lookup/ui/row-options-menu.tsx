@@ -20,7 +20,7 @@ const RowOptionsMenu = ({ input, timestamp }: RowOptionsMenuProps) => {
   const styles = useStyles()
   const navigate = useNavigate()
   const [, setViewedItemTimestamp] = useLocalStorage('viewedItemTimestamp')
-  const [items, setItems] = useLocalStorage<DnsRecord[]>('items', [])
+  const [dnsLookupHistory, setDnsLookupHistory] = useLocalStorage<DnsRecord[]>('dnsLookupHistory', [])
   const [searchParams] = useSearchParams()
 
   const handleViewDetailsClick = () => {
@@ -41,7 +41,7 @@ const RowOptionsMenu = ({ input, timestamp }: RowOptionsMenuProps) => {
   }
 
   const handleRemoveEntryClick = () => {
-    setItems(items.filter((singleItem) => singleItem.timestamp !== timestamp))
+    setDnsLookupHistory(dnsLookupHistory.filter((singleItem) => singleItem.timestamp !== timestamp))
   }
 
   return (

@@ -34,11 +34,11 @@ const useStyles = makeStyles({
 
 const DnsLookupResultCard = () => {
   const styles = useStyles()
-  const [items] = useLocalStorage<DnsRecord[]>('items', [])
+  const [dnsLookupHistory] = useLocalStorage<DnsRecord[]>('dnsLookupHistory', [])
   const [viewedItemTimestamp] = useLocalStorage('viewedItemTimestamp')
-  const item = items.find((item) => item.timestamp === viewedItemTimestamp)
+  const historyItem = dnsLookupHistory.find((item) => item.timestamp === viewedItemTimestamp)
 
-  if (!item) return null
+  if (!historyItem) return null
 
   const TxtRecord = ({ index, txtRecord }: { index: number; txtRecord: string }) => (
     <>
@@ -53,23 +53,23 @@ const DnsLookupResultCard = () => {
     <Card className={styles.card}>
       <List>
         <ListItem className={styles.listItem}>
-          <b>Type:</b> {item.result.type}
+          <b>Type:</b> {historyItem.result.type}
         </ListItem>
 
         <ListItem className={styles.listItem}>
-          <b>TTL:</b> {item.result.ttl}
+          <b>TTL:</b> {historyItem.result.ttl}
         </ListItem>
 
         <ListItem className={styles.listItem}>
-          <b>Host:</b> {item.host}
+          <b>Host:</b> {historyItem.host}
         </ListItem>
 
         <ListItem className={styles.listItem}>
           <b>Data:</b>
           <List className={styles.txtList}>
-            {item.result.data.map((dataItem, index) => (
+            {historyItem.result.data.map((dataItem, index) => (
               <ListItem key={index} className={styles.txtListItem}>
-                {item.type.toUpperCase() === 'TXT' ? (
+                {historyItem.type.toUpperCase() === 'TXT' ? (
                   <TxtRecord index={index} txtRecord={dataItem} />
                 ) : (
                   <span className={styles.dnsData}>{dataItem}</span>
