@@ -13,6 +13,7 @@ import {
   Text,
   tokens,
 } from '@fluentui/react-components'
+import RelativeTime from '~/components/RelativeTime'
 import type { DnsLookupInput } from '~/lib/dns-lookup'
 import useLocalStorage from '~/utils/use-local-storage'
 import RowOptionsMenu from './row-options-menu'
@@ -63,7 +64,7 @@ const columns: TableColumnDefinition<DnsLookupResult>[] = [
     columnId: 'timestamp',
     compare: (a, b) => a.timestamp.toString().localeCompare(b.timestamp.toString()),
     renderHeaderCell: () => 'Timestamp',
-    renderCell: (item) => item.timestamp,
+    renderCell: (item) => <RelativeTime timestamp={item.timestamp} />,
   }),
 ]
 

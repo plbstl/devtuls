@@ -1,5 +1,7 @@
+import { Fragment } from 'react/jsx-runtime'
 import { Card, makeStyles, shorthands, Text, tokens } from '@fluentui/react-components'
 import { List, ListItem } from '@fluentui/react-list-preview'
+import RelativeTime from '~/components/RelativeTime'
 import { DNS_RESOURCE_RECORD_TYPES } from '~/utils/dns-rr-types'
 import useLocalStorage from '~/utils/use-local-storage'
 import type { DnsLookupResult } from './dns-lookup-results-history'
@@ -29,14 +31,14 @@ const DnsLookupResultCard = () => {
     <Card className={styles.card}>
       <header style={{ fontStyle: 'italic' }}>
         <Text block as="p" style={{ fontSize: tokens.fontSizeBase100 }}>
-          - {historyItem.serviceUsed} <br />- {historyItem.timestamp}
+          - {historyItem.serviceUsed} <br />- <RelativeTime timestamp={historyItem.timestamp} />
         </Text>
       </header>
       {historyItem.results.map((result, index) => (
-        <>
+        <Fragment key={index}>
           {index !== 0 && <hr className={styles.divider} />}
 
-          <List key={index}>
+          <List>
             <ListItem className={styles.listItem}>
               <b>Type:</b> {formatDnsResourceRecordTypeLabel(result.type)}
             </ListItem>
@@ -50,7 +52,7 @@ const DnsLookupResultCard = () => {
               <b>Data:</b> {result.data}
             </ListItem>
           </List>
-        </>
+        </Fragment>
       ))}
     </Card>
   )
