@@ -21,7 +21,11 @@ export interface DnsRecord {
   status: 'success' | 'error'
   type: string
   host: string
-  result: string
+  result: {
+    type: string
+    ttl: number
+    data: string[]
+  }
   service: string
   timestamp: number
   input: Partial<DnsLookupInput>
@@ -47,7 +51,6 @@ const columns: TableColumnDefinition<DnsRecord>[] = [
   }),
   createTableColumn<DnsRecord>({
     columnId: 'result',
-    compare: (a, b) => a.result.localeCompare(b.result),
     renderHeaderCell: () => 'Result',
     renderCell: (item) => (
       <>

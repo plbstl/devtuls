@@ -12,7 +12,7 @@ const useStyles = makeStyles({
 const DnsLookupResults = () => {
   const styles = useStyles()
 
-  // localStorage.setItem('items', JSON.stringify(items))
+  localStorage.setItem('items', JSON.stringify(items))
 
   return (
     <div className={styles.results}>

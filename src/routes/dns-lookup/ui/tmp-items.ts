@@ -5,7 +5,11 @@ export const items: DnsRecord[] = [
     status: 'success',
     type: 'TXT',
     host: 'api.github.com',
-    result: 'ns-1707.awsdns-21.co.uk. awsdns-hostmaster.amazon.com. 1 7200 900 1209600 86400',
+    result: {
+      data: ['ns-1707.awsdns-21.co.uk. awsdns-hostmaster.amazon.com. 1 7200 900 1209600 86400'],
+      ttl: 60,
+      type: 'TXT',
+    },
     service: 'Google Public DNS',
     timestamp: 1,
     input: {
@@ -18,7 +22,11 @@ export const items: DnsRecord[] = [
     status: 'success',
     type: 'A',
     host: 'plbstl.github.io',
-    result: '185.199.110.153, 185.199.108.153, 185.199.109.153, 185.199.111.153',
+    result: {
+      data: ['185.199.110.153', '185.199.108.153', '185.199.109.153', '185.199.111.153'],
+      ttl: 60,
+      type: 'A',
+    },
     service: 'https://dns.custom-query/json',
     timestamp: 2,
     input: {
@@ -32,7 +40,11 @@ export const items: DnsRecord[] = [
     status: 'error',
     type: 'NS',
     host: 'google.com',
-    result: 'Your client has issued a malformed or illegal request. Invalid query name: ‘’.',
+    result: {
+      data: ['Your client has issued a malformed or illegal request. Invalid query name: ‘’.'],
+      ttl: 60,
+      type: 'NS',
+    },
     service: 'Cloudflare Families (Malware/Adult)',
     timestamp: 3,
     input: {
@@ -45,7 +57,11 @@ export const items: DnsRecord[] = [
     status: 'success',
     type: 'MX',
     host: 'https://dns-long-dn-name.custom-domain-long-name.co.cu',
-    result: 'ns1.etecsa.net. admin.enet.cu. 2024080900 7200 1800 1209600 2000',
+    result: {
+      data: ['ns1.etecsa.net. admin.enet.cu. 2024080900 7200 1800 1209600 2000'],
+      ttl: 60,
+      type: 'MX',
+    },
     service: 'Cloudflare DNS',
     timestamp: 4,
     input: {
@@ -60,7 +76,11 @@ export const items: DnsRecord[] = [
     status: 'success',
     type: 'TXT',
     host: 'api.github.com',
-    result: 'ns-1707.awsdns-21.co.uk. awsdns-hostmaster.amazon.com. 1 7200 900 1209600 86400',
+    result: {
+      data: ['ns-1707.awsdns-21.co.uk. awsdns-hostmaster.amazon.com. 1 7200 900 1209600 86400'],
+      ttl: 60,
+      type: 'TXT',
+    },
     service: 'Google Public DNS',
     timestamp: 5,
     input: {
@@ -73,7 +93,11 @@ export const items: DnsRecord[] = [
     status: 'success',
     type: 'A',
     host: 'plbstl.github.io',
-    result: '185.199.110.153, 185.199.108.153, 185.199.109.153, 185.199.111.153',
+    result: {
+      data: ['185.199.110.153', '185.199.108.153', '185.199.109.153', '185.199.111.153'],
+      ttl: 60,
+      type: 'A',
+    },
     service: 'https://dns.custom-query/json',
     timestamp: 6,
     input: {
@@ -87,7 +111,11 @@ export const items: DnsRecord[] = [
     status: 'error',
     type: 'NS',
     host: 'google.com',
-    result: 'Your client has issued a malformed or illegal request. Invalid query name: ‘’.',
+    result: {
+      data: ['Your client has issued a malformed or illegal request. Invalid query name: ‘’.'],
+      ttl: 60,
+      type: 'NS',
+    },
     service: 'Cloudflare Families (Malware/Adult)',
     timestamp: 7,
     input: {
@@ -100,7 +128,11 @@ export const items: DnsRecord[] = [
     status: 'success',
     type: 'MX',
     host: 'https://dns-long-dn-name.custom-domain-long-name.co.cu',
-    result: 'ns1.etecsa.net. admin.enet.cu. 2024080900 7200 1800 1209600 2000',
+    result: {
+      data: ['ns1.etecsa.net. admin.enet.cu. 2024080900 7200 1800 1209600 2000'],
+      ttl: 60,
+      type: 'MX',
+    },
     service: 'Cloudflare DNS',
     timestamp: 8,
     input: {
@@ -115,7 +147,11 @@ export const items: DnsRecord[] = [
     status: 'success',
     type: 'TXT',
     host: 'api.github.com',
-    result: 'ns-1707.awsdns-21.co.uk. awsdns-hostmaster.amazon.com. 1 7200 900 1209600 86400',
+    result: {
+      data: ['ns-1707.awsdns-21.co.uk. awsdns-hostmaster.amazon.com. 1 7200 900 1209600 86400'],
+      ttl: 60,
+      type: 'TXT',
+    },
     service: 'Google Public DNS',
     timestamp: 9,
     input: {
@@ -128,7 +164,11 @@ export const items: DnsRecord[] = [
     status: 'success',
     type: 'A',
     host: 'plbstl.github.io',
-    result: '185.199.110.153, 185.199.108.153, 185.199.109.153, 185.199.111.153',
+    result: {
+      data: ['185.199.110.153', '185.199.108.153', '185.199.109.153', '185.199.111.153'],
+      ttl: 60,
+      type: 'A',
+    },
     service: 'https://dns.custom-query/json',
     timestamp: 10,
     input: {
@@ -142,7 +182,11 @@ export const items: DnsRecord[] = [
     status: 'error',
     type: 'NS',
     host: 'google.com',
-    result: 'Your client has issued a malformed or illegal request. Invalid query name: ‘’.',
+    result: {
+      data: ['Your client has issued a malformed or illegal request. Invalid query name: ‘’.'],
+      ttl: 60,
+      type: 'NS',
+    },
     service: 'Cloudflare Families (Malware/Adult)',
     timestamp: 11,
     input: {
@@ -155,7 +199,11 @@ export const items: DnsRecord[] = [
     status: 'success',
     type: 'MX',
     host: 'https://dns-long-dn-name.custom-domain-long-name.co.cu',
-    result: 'ns1.etecsa.net. admin.enet.cu. 2024080900 7200 1800 1209600 2000',
+    result: {
+      data: ['ns1.etecsa.net. admin.enet.cu. 2024080900 7200 1800 1209600 2000'],
+      ttl: 60,
+      type: 'MX',
+    },
     service: 'Cloudflare DNS',
     timestamp: 12,
     input: {
