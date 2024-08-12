@@ -21,7 +21,7 @@ import RowOptionsMenu from './row-options-menu'
 export interface DnsLookupResult {
   input: DnsLookupInput
   results: { name: string; type: number; TTL?: number; data: string }[]
-  resultError: boolean
+  resultError: string | null
   serviceUsed: string
   timestamp: number
 }
@@ -49,7 +49,11 @@ const columns: TableColumnDefinition<DnsLookupResult>[] = [
     renderHeaderCell: () => 'Results',
     renderCell: (item) => (
       <>
-        {item.resultError && <b style={{ color: tokens.colorStatusDangerForeground1 }}>ERROR:</b>}{' '}
+        {item.resultError && (
+          <>
+            <b style={{ color: tokens.colorStatusDangerForeground1 }}>ERROR:</b> {item.resultError}
+          </>
+        )}
         {item.results.map(({ data }) => data).join(', ') || '-'}
       </>
     ),

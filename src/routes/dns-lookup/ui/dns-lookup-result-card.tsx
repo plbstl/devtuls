@@ -34,6 +34,19 @@ const DnsLookupResultCard = () => {
           - {historyItem.serviceUsed} <br />- <RelativeTime timestamp={historyItem.timestamp} />
         </Text>
       </header>
+
+      {historyItem.resultError && (
+        <>
+          <b style={{ color: tokens.colorStatusDangerForeground1 }}>ERROR:</b> {historyItem.resultError}
+          <Text block as="p">
+            <b>INPUT:</b>
+          </Text>
+          <Text as="pre" font="monospace">
+            {JSON.stringify(historyItem.input, null, 2)}
+          </Text>
+        </>
+      )}
+
       {historyItem.results.map((result, index) => (
         <Fragment key={index}>
           {index !== 0 && <hr className={styles.divider} />}

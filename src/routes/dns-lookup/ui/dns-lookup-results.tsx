@@ -35,7 +35,7 @@ const DnsLookupResults = () => {
     const result: DnsLookupResult = {
       input,
       results: actionData.data?.Answer ?? actionData.data?.Authority ?? actionData.data?.Additional ?? [],
-      resultError: Boolean(actionData.error),
+      resultError: actionData.error,
       serviceUsed: loaderData.serviceUrl ? loaderData.serviceUrl : dohResolvers.Google,
       timestamp: Date.now(),
     }
