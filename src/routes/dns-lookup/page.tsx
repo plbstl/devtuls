@@ -1,5 +1,6 @@
 import { Fragment } from 'react/jsx-runtime'
-import { Body1, makeStyles, Tab, TabList, Title2, tokens } from '@fluentui/react-components'
+import { Body1, makeStyles, mergeClasses, Tab, TabList, Title2, tokens, Tooltip } from '@fluentui/react-components'
+import { HomeMoreFilled } from '@fluentui/react-icons'
 import Markdown from 'markdown-to-jsx'
 import { useMatch } from 'react-router-dom'
 import Link from '~/components/Link'
@@ -27,6 +28,9 @@ const useStyles = makeStyles({
     ':hover': { textDecoration: 'none' },
     ':active': { textDecoration: 'none' },
     ':focus': { textDecoration: 'none' },
+  },
+  goHome: {
+    marginLeft: 'auto',
   },
 })
 
@@ -58,6 +62,13 @@ const DnsLookupRoute = () => {
           </Link>
           <Link href={`${baseHref}/changelog`} appearance="subtle" className={styles.tabName}>
             <Tab value="changelog">Changelog</Tab>
+          </Link>
+          <Link href="/" appearance="subtle" className={mergeClasses(styles.tabName, styles.goHome)}>
+            <Tab value="home">
+              <Tooltip content="Home page" relationship="label">
+                <HomeMoreFilled fontSize={18} />
+              </Tooltip>
+            </Tab>
           </Link>
         </TabList>
       </div>
