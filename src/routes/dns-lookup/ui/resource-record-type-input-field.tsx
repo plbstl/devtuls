@@ -12,6 +12,7 @@ import {
 import { DocumentSearchFilled } from '@fluentui/react-icons'
 import { useLoaderData, useNavigation } from 'react-router-dom'
 import { DNS_RESOURCE_RECORD_TYPES } from '~/utils/dns-rr-types'
+import { getTypedObjectValues } from '~/utils/get-typed-object'
 import { useSearchParams } from '~/utils/use-search-params'
 import type { DnsLookupLoaderData } from '../page.router'
 
@@ -79,7 +80,7 @@ function ResourceRecordTypeInputField() {
         style={{ animationName: submitting ? 'pulse' : 'none' }}
         input={{ className: styles.input }}
       >
-        {DNS_RESOURCE_RECORD_TYPES.map((record) => (
+        {getTypedObjectValues(DNS_RESOURCE_RECORD_TYPES).map((record) => (
           <Option key={`${record.TYPE}-${record.Value}`} text={record.TYPE} value={record.TYPE}>
             <Text className={styles.label}>{record.TYPE}</Text>
             <Text as="pre" font="monospace" className={styles.secondaryLabel}>
