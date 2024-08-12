@@ -41,7 +41,7 @@ function ErrorPage() {
           </Text>
         )}
         <Subtitle1 as="p" className={mergeClasses(styles.text, styles.subtitle)}>
-          <Link href="/">Go Home</Link>
+          <Link href="//">Go Home</Link>
         </Subtitle1>
       </div>
     )
@@ -60,7 +60,7 @@ function ErrorPage() {
           {error.message}
         </Text>
         <Subtitle1 as="p" className={mergeClasses(styles.text, styles.subtitle)}>
-          <Link href="/">Go Home</Link>
+          <Link href="//">Go Home</Link>
         </Subtitle1>
       </div>
     )
@@ -75,7 +75,7 @@ function ErrorPage() {
         Sorry, an unknown error has occurred.
       </Text>
       <Subtitle1 as="p" className={mergeClasses(styles.text, styles.subtitle)}>
-        <Link href="/">Go Home</Link>
+        <Link href="//">Go Home</Link>
       </Subtitle1>
     </div>
   )

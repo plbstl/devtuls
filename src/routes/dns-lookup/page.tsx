@@ -63,7 +63,7 @@ const DnsLookupRoute = () => {
           <Link href={`${baseHref}/changelog`} appearance="subtle" className={styles.tabName}>
             <Tab value="changelog">Changelog</Tab>
           </Link>
-          <Link href="/" appearance="subtle" className={mergeClasses(styles.tabName, styles.goHome)}>
+          <Link href="//" appearance="subtle" className={mergeClasses(styles.tabName, styles.goHome)}>
             <Tab value="home">
               <Tooltip content="Home page" relationship="label">
                 <HomeMoreFilled fontSize={18} />
