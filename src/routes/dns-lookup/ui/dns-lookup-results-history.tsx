@@ -89,6 +89,8 @@ const DnsLookupResultsHistory = () => {
   const styles = useStyles()
   const [items] = useLocalStorage('items', [])
 
+  if (!items.length) return null
+
   return (
     <div className={styles.table}>
       <DataGrid
