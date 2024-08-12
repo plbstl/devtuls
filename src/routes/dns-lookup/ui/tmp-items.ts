@@ -1,4 +1,4 @@
-import type { DnsRecord } from './row-options-menu'
+import { DnsRecord } from './dns-lookup-results-history'
 
 export const items: DnsRecord[] = [
   {

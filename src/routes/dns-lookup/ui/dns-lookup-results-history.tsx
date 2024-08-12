@@ -13,8 +13,19 @@ import {
   Text,
   tokens,
 } from '@fluentui/react-components'
+import type { DnsLookupInput } from '~/lib/dns-lookup'
 import useLocalStorage from '~/utils/use-local-storage'
-import RowOptionsMenu, { DnsRecord } from './row-options-menu'
+import RowOptionsMenu from './row-options-menu'
+
+export interface DnsRecord {
+  status: 'success' | 'error'
+  type: string
+  host: string
+  result: string
+  service: string
+  timestamp: number
+  input: Partial<DnsLookupInput>
+}
 
 const columns: TableColumnDefinition<DnsRecord>[] = [
   createTableColumn<DnsRecord>({
@@ -59,30 +70,12 @@ const columns: TableColumnDefinition<DnsRecord>[] = [
 ]
 
 const columnSizingOptions: TableColumnSizingOptions = {
-  options: {
-    minWidth: 45,
-    idealWidth: 50,
-  },
-  type: {
-    minWidth: 70,
-    idealWidth: 90,
-  },
-  host: {
-    minWidth: 150,
-    idealWidth: 180,
-  },
-  result: {
-    minWidth: 280,
-    idealWidth: 300,
-  },
-  service: {
-    minWidth: 250,
-    idealWidth: 280,
-  },
-  timestamp: {
-    minWidth: 170,
-    idealWidth: 190,
-  },
+  options: { minWidth: 45, idealWidth: 50 },
+  type: { minWidth: 70, idealWidth: 90 },
+  host: { minWidth: 150, idealWidth: 180 },
+  result: { minWidth: 280, idealWidth: 300 },
+  service: { minWidth: 250, idealWidth: 280 },
+  timestamp: { minWidth: 170, idealWidth: 190 },
 }
 
 const useStyles = makeStyles({

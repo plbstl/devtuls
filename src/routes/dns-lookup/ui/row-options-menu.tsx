@@ -1,19 +1,9 @@
 import { makeStyles, Menu, MenuButton, MenuItem, MenuList, MenuPopover, MenuTrigger } from '@fluentui/react-components'
 import { AppsListDetailRegular, ArrowRepeatAllRegular, DeleteRegular, MoreHorizontalRegular } from '@fluentui/react-icons'
 import { useNavigate } from 'react-router-dom'
-import type { DnsLookupInput } from '~/lib/dns-lookup'
 import useLocalStorage from '~/utils/use-local-storage'
 import { useSearchParams } from '~/utils/use-search-params'
-
-export interface DnsRecord {
-  status: 'success' | 'error'
-  type: string
-  host: string
-  result: string
-  service: string
-  timestamp: number
-  input: Partial<DnsLookupInput>
-}
+import type { DnsRecord } from './dns-lookup-results-history'
 
 interface RowOptionsMenuProps {
   input: DnsRecord['input']
