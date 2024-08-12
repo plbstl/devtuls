@@ -1,6 +1,10 @@
+import { Fragment } from 'react/jsx-runtime'
 import { Body1, makeStyles, Tab, TabList, Title2, tokens } from '@fluentui/react-components'
+import Markdown from 'markdown-to-jsx'
 import { useMatch } from 'react-router-dom'
 import Link from '~/components/Link'
+import changelog from '~/lib/dns-lookup.CHANGELOG.md?raw'
+import docs from '~/lib/dns-lookup.docs.md?raw'
 import DnsLookupRouteTool from './ui/dns-lookup-route-tool'
 
 const useStyles = makeStyles({
@@ -58,10 +62,11 @@ const DnsLookupRoute = () => {
         </TabList>
       </div>
 
-      <div>
-        {defaultSelected === 'tool' && <DnsLookupRouteTool />}
-        {defaultSelected === 'docs' && 'Documentation'}
-        {defaultSelected === 'changelog' && 'Changelog'}
+      {defaultSelected === 'tool' && <DnsLookupRouteTool />}
+
+      <div className="prose">
+        {defaultSelected === 'docs' && <Markdown options={{ wrapper: Fragment }}>{docs}</Markdown>}
+        {defaultSelected === 'changelog' && <Markdown>{changelog}</Markdown>}
       </div>
     </div>
   )

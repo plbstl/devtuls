@@ -25,3 +25,28 @@ body {
     opacity: 0.5;
   }
 }
+.prose {
+  padding: 12px;
+}
+
+.prose p {
+  margin-top: 8px;
+}
+
+.prose h2 {
+  margin-top: 24px;
+}
+
+.prose h3 {
+  margin-top: 16px;
+}
+
+.prose li {
+  margin-top: 8px;
+  margin-left: 32px;
+}
+
+.prose code {
+  font-family: 'Nimbus Mono PS', Consolas, 'Courier New', Courier, monospace;
+  font-weight: normal;
+}

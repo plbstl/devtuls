@@ -20,6 +20,9 @@ importers:
       '@fluentui/react-list-preview':
         specifier: ^0.3.3
         version: 0.3.3(@types/react-dom@18.3.0)(@types/react@18.3.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(scheduler@0.23.2)
+      markdown-to-jsx:
+        specifier: ^7.4.7
+        version: 7.4.7(react@18.3.1)
       punycode:
         specifier: ^2.3.1
         version: 2.3.1
